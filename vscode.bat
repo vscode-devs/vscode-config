@@ -11,7 +11,8 @@ echo 1. Backup VSCode Settings
 echo 2. Restore VSCode Settings
 echo 3. Uninstall VSCode (User Mode)
 echo 4. Clean Residual Files
-echo 5. Exit
+echo 5. Download and Install VSCode
+echo 6. Exit
 echo -------------------------------
 set /p choice=Please select an option (enter number): 
 
@@ -19,7 +20,8 @@ if "%choice%"=="1" goto backup
 if "%choice%"=="2" goto restore
 if "%choice%"=="3" goto uninstall
 if "%choice%"=="4" goto clean
-if "%choice%"=="5" exit /b
+if "%choice%"=="5" goto download_install
+if "%choice%"=="6" exit /b
 echo Invalid selection, please try again
 timeout /t 2 > nul
 goto menu
@@ -137,3 +139,78 @@ echo ---------------------------
 echo Cleanup completed
 pause
 goto menu
+
+:: 新增下载安装功能
+:download_install
+cls
+setlocal enabledelayedexpansion
+set "download_url=https://vscode.download.prss.microsoft.com/dbazure/download/stable/848b80aeb52026648a8ff9f7c45a9b0a80641e2e/VSCodeUserSetup-x64-1.100.2.exe"
+set "installer_name=VSCodeUserSetup-x64-1.100.2.exe"
+set "installer_path=%~dp0%installer_name%"
+
+echo Checking local installer...
+echo ---------------------------
+
+:: 修复括号解析问题
+if exist "%installer_path%" (
+    echo Found existing installer: 
+    echo [Path] %installer_path%
+    
+    for %%F in ("%installer_path%") do set "exist_size=%%~zF"
+    set "min_valid_size=50000000"
+    
+    if !exist_size! LSS !min_valid_size! (
+        echo Corrupted file detected ^(!exist_size! bytes^)
+        del /f /q "%installer_path%"
+        goto download
+    )
+    
+    choice /m "Use existing installer (Y/N)"
+    if errorlevel 2 goto download
+    goto install
+)
+
+:download
+echo Downloading Visual Studio Code...
+echo ---------------------------------
+echo URL: %download_url%
+echo Path: %installer_path%
+
+where curl >nul 2>&1 || (
+    echo Error: curl not found in PATH
+    echo Download curl from https://curl.se/windows/
+    pause
+    endlocal
+    goto menu
+)
+
+curl -L -o "%installer_path%" --progress-bar "%download_url%"
+if errorlevel 1 (
+    echo Download failed with error code %errorlevel%
+    if exist "%installer_path%" del /f /q "%installer_path%"
+    pause
+    endlocal
+    goto menu
+)
+
+:install
+echo Validating installer...
+for %%F in ("%installer_path%") do set "final_size=%%~zF"
+if !final_size! LSS 50000000 (
+    echo Invalid file size: !final_size! bytes
+    del /f /q "%installer_path%"
+    pause
+    endlocal
+    goto menu
+)
+
+echo Starting installation...
+echo -----------------------
+start "" "%installer_path%" /VERYSILENT /NORESTART
+
+echo Installer launched successfully
+echo You can close this window after setup completes
+endlocal
+pause
+goto menu
+
