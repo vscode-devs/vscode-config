@@ -77,7 +77,10 @@ setlocal EnableDelayedExpansion
 set "paths[0]=%LOCALAPPDATA%\Programs\Microsoft VS Code"
 set "paths[1]=%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code"
 set "paths[2]=%ProgramFiles%\Microsoft VS Code"
-
+:: 定义常见安装路径列表
+set "paths[0]=%LOCALAPPDATA%\Programs\Microsoft VS Code"  :: 用户安装
+set "paths[1]=%ProgramFiles%\Microsoft VS Code"           :: 系统安装
+set "paths[2]=%ProgramFiles(x86)%\Microsoft VS Code"      :: 32位系统安装
 echo Scanning for VSCode installations...
 echo ------------------------------------
 
@@ -95,7 +98,7 @@ for /l %%i in (0,1,2) do (
 if %found% equ 0 (
     echo Could not find automatic installation
     echo Please input VSCode installation path:
-    set /p custom_path=Enter path (e.g. C:\MyTools\VSCode): 
+    set /p custom_path=Enter path (e.g. C:\MyTools\VSCode^):
     if exist "%custom_path%\unins000.exe" (
         set "uninstaller=%custom_path%\unins000.exe"
         goto :start_uninstall
