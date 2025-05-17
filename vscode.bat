@@ -151,7 +151,6 @@ set "installer_path=%~dp0%installer_name%"
 echo Checking local installer...
 echo ---------------------------
 
-:: 修复括号解析问题
 if exist "%installer_path%" (
     echo Found existing installer: 
     echo [Path] %installer_path%
@@ -173,17 +172,6 @@ if exist "%installer_path%" (
 :download
 echo Downloading Visual Studio Code...
 echo ---------------------------------
-echo URL: %download_url%
-echo Path: %installer_path%
-
-where curl >nul 2>&1 || (
-    echo Error: curl not found in PATH
-    echo Download curl from https://curl.se/windows/
-    pause
-    endlocal
-    goto menu
-)
-
 curl -L -o "%installer_path%" --progress-bar "%download_url%"
 if errorlevel 1 (
     echo Download failed with error code %errorlevel%
@@ -204,13 +192,19 @@ if !final_size! LSS 50000000 (
     goto menu
 )
 
-echo Starting installation...
-echo -----------------------
-start "" "%installer_path%" /VERYSILENT /NORESTART
+echo Starting installation with desktop shortcut...
+echo ----------------------------------------------
+start /wait "" "%installer_path%" /VERYSILENT /NORESTART /MERGETASKS=desktopicon
 
-echo Installer launched successfully
-echo You can close this window after setup completes
+echo Creating desktop shortcut...
+echo ---------------------------
+set "vscode_exe=%LOCALAPPDATA%\Programs\Microsoft VS Code\Code.exe"
+set "desktop_shortcut=%USERPROFILE%\Desktop\Visual Studio Code.lnk"
+
+:: 通过PowerShell创建快捷方式
+powershell -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%desktop_shortcut%'); $s.TargetPath = '%vscode_exe%'; $s.Save()"
+
+echo Operation completed!
 endlocal
 pause
 goto menu
-
