@@ -236,55 +236,53 @@ if !final_size! LSS 50000000 (
 
 echo Starting %install_type% installation...
 echo -------------------------------------
-echo 正在后台安装...
+echo installing...
+:: 仅User模式创建快捷方式,system模式下上面有了 /MERGETASKS=desktopicon 参数后可以自动创建
 
 start /wait "" "%installer_path%" /VERYSILENT /NORESTART /MERGETASKS=desktopicon
+if errorlevel 1 (
+	echo Installation failed with error code %errorlevel%
+	pause
+	endlocal
+	goto menu
+)
 
-:: 仅User模式创建快捷方式,system模式下上面有了 /MERGETASKS=desktopicon 参数后可以自动创建
+
+:: 等待2秒确保安装完成
+timeout /t 2 /nobreak >nul
+
+:: 验证安装路径
+set "vscode_exe=%install_path%\Code.exe"
+echo Verifying installation at: "%vscode_exe%"
+if not exist "%vscode_exe%" (
+    echo Error: VSCode executable not found after installation
+    echo Possible reasons:
+    echo 1. Installation was interrupted
+    echo 2. Custom installation path used
+    echo 3. Antivirus blocked the installation
+    pause
+    endlocal
+    goto menu
+)
+
 if "%install_type%"=="user" (
     echo Creating desktop shortcut...
     echo ---------------------------
-    set "vscode_exe=%install_path%\Code.exe"
-    
-    :: 验证目标文件存在性
-    if not exist "%vscode_exe%" (
-        echo Error: Target executable not found at "%vscode_exe%"
-        pause
-        goto menu
-    )
+	powershell -Command "$installPath='%install_path:\=\\%'; $desktop=[Environment]::GetFolderPath('Desktop'); $shortcutPath=Join-Path $desktop 'Visual Studio Code.lnk'; $ws=New-Object -ComObject WScript.Shell; $sc=$ws.CreateShortcut($shortcutPath); $sc.TargetPath=($installPath+'\Code.exe'); $sc.WorkingDirectory=$installPath; $sc.IconLocation=$sc.TargetPath+',0'; $sc.Save()"
 
-    :: 使用安全路径构造方法
-    setlocal enabledelayedexpansion
-    set "ps_script=$desktop = [Environment]::GetFolderPath('Desktop');"
-    set "ps_script=!ps_script! $shortcutPath = Join-Path -Path $desktop -ChildPath 'Visual Studio Code.lnk';"
-    set "ps_script=!ps_script! $ws = New-Object -ComObject WScript.Shell;"
-    set "ps_script=!ps_script! $sc = $ws.CreateShortcut($shortcutPath);"
-    set "ps_script=!ps_script! $sc.TargetPath = '%vscode_exe: =% ';"
-    set "ps_script=!ps_script! $sc.WorkingDirectory = '%%install_path%%';"
-    set "ps_script=!ps_script! $sc.IconLocation = '%vscode_exe: =% ,0';"
-    set "ps_script=!ps_script! $sc.Save();"
-    
-    :: 执行PowerShell命令
-    echo Executing PowerShell command:
-    echo !ps_script!
-    powershell -Command "!ps_script!"
-    
-    :: 验证结果
-    if exist "%USERPROFILE%\Desktop\Visual Studio Code.lnk" (
-        echo Shortcut verification passed
-        :: 显示快捷方式属性
-        echo Shortcut properties:
-        powershell -Command "$sh = New-Object -ComObject Shell.Application; $item = $sh.Namespace('%USERPROFILE%\Desktop').ParseName('Visual Studio Code.lnk'); $item | Select-Object Name, @{n='Target';e={$_.GetLink.Target}}, @{n='Icon';e={$_.GetLink.IconLocation}}"
-    ) else (
-        echo Shortcut creation failed
-    )
-    endlocal
+	:: 验证结果
+	if exist "%USERPROFILE%\Desktop\Visual Studio Code.lnk" (
+		echo Shortcut created successfully at:
+		echo "%USERPROFILE%\Desktop\Visual Studio Code.lnk"
+	) else (
+		echo Failed to create shortcut
+	)
 )
 
 :: echo Cleaning up installer...
 :: del /f /q "%installer_path%"
 
 echo Installation completed!
-endlocal
 pause
+endlocal
 goto menu
