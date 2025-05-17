@@ -9,13 +9,15 @@ echo    VSCode Settings Manager
 echo -------------------------------
 echo 1. Backup VSCode Settings
 echo 2. Restore VSCode Settings
-echo 3. Exit
+echo 3. Uninstall VSCode (User Mode)
+echo 4. Exit
 echo -------------------------------
 set /p choice=Please select an option (enter number): 
 
 if "%choice%"=="1" goto backup
 if "%choice%"=="2" goto restore
-if "%choice%"=="3" exit /b
+if "%choice%"=="3" goto uninstall
+if "%choice%"=="4" exit /b
 echo Invalid selection, please try again
 timeout /t 2 > nul
 goto menu
@@ -62,4 +64,58 @@ echo Restore successful!
 echo [Source]  %backup_file%
 echo [Target]  %vscode_settings%
 pause
+goto menu
+
+:: Uninstall VSCode (User Mode)
+:uninstall
+setlocal EnableDelayedExpansion
+
+:: 常见用户模式安装路径
+set "paths[0]=%LOCALAPPDATA%\Programs\Microsoft VS Code"
+set "paths[1]=%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code"
+set "paths[2]=%ProgramFiles%\Microsoft VS Code"
+
+echo Scanning for VSCode installations...
+echo ------------------------------------
+
+set found=0
+for /l %%i in (0,1,2) do (
+    set "install_dir=!paths[%%i]!"
+    if exist "!install_dir!\unins000.exe" (
+        echo Found installation at: !install_dir!
+        set /a found+=1
+        set "uninstaller=!install_dir!\unins000.exe"
+        goto :start_uninstall
+    )
+)
+
+if %found% equ 0 (
+    echo Could not find automatic installation
+    echo Please input VSCode installation path:
+    set /p custom_path=Enter path (e.g. C:\MyTools\VSCode): 
+    if exist "%custom_path%\unins000.exe" (
+        set "uninstaller=%custom_path%\unins000.exe"
+        goto :start_uninstall
+    ) else (
+        echo Error: Uninstaller not found in specified path
+        echo Check if unins000.exe exists in: %custom_path%
+    )
+)
+
+:start_uninstall
+if defined uninstaller (
+    echo Starting uninstaller: %uninstaller%
+    echo NOTE: This will start the GUI uninstaller
+    echo Close this window ONLY AFTER uninstall completes
+    timeout /t 5
+    start "" "%uninstaller%"
+) else (
+    echo Error: No valid uninstaller found
+    echo Possible solutions:
+    echo 1. Already uninstalled
+    echo 2. Portable/zip version installed
+    echo 3. Custom installer used
+)
+pause
+endlocal
 goto menu
