@@ -20,7 +20,7 @@ if "%choice%"=="1" goto backup
 if "%choice%"=="2" goto restore
 if "%choice%"=="3" goto uninstall
 if "%choice%"=="4" goto clean
-if "%choice%"=="5" goto download_install
+if "%choice%"=="5" goto install_menu
 if "%choice%"=="6" exit /b
 echo Invalid selection, please try again
 timeout /t 2 > nul
@@ -141,12 +141,54 @@ pause
 goto menu
 
 :: 新增下载安装功能
-:download_install
+:install_menu
 cls
-setlocal enabledelayedexpansion
-set "download_url=https://vscode.download.prss.microsoft.com/dbazure/download/stable/848b80aeb52026648a8ff9f7c45a9b0a80641e2e/VSCodeUserSetup-x64-1.100.2.exe"
+echo -------------------------------
+echo    VSCode Installation Type
+echo -------------------------------
+echo 1. User Install   (Current User, will install to %LOCALAPPDATA%\Programs\Microsoft VS Code)
+echo 2. System Install (All Users, will install to %ProgramFiles%\Microsoft VS Code)
+echo 3. Return to Main Menu
+echo -------------------------------
+set /p install_choice=Select installation type: 
+
+if "%install_choice%"=="1" goto download_user
+if "%install_choice%"=="2" goto download_system
+if "%install_choice%"=="3" goto menu
+echo Invalid selection, please try again
+timeout /t 2 > nul
+goto install_menu
+
+
+:download_user
+set "install_type=user"
+set "commit_id=848b80aeb52026648a8ff9f7c45a9b0a80641e2e"
+set "url_param=VSCodeUserSetup-x64-1.100.2.exe"
 set "installer_name=VSCodeUserSetup-x64-1.100.2.exe"
+set "install_path=%LOCALAPPDATA%\Programs\Microsoft VS Code"
+goto download
+
+:download_system
+set "install_type=system"
+set "commit_id=848b80aeb52026648a8ff9f7c45a9b0a80641e2e"
+set "url_param=VSCodeSetup-x64-1.100.2.exe"
+set "installer_name=VSCodeSetup-x64-1.100.2.exe"
+set "install_path=%ProgramFiles%\Microsoft VS Code"
+
+:: 检查管理员权限
+::net session >nul 2>&1
+::if %errorLevel% neq 0 (
+::    echo Requesting administrator privileges...
+::    timeout /t 2
+::    powershell -Command "Start-Process cmd -ArgumentList '/c %~s0' -Verb RunAs"
+::    exit /b
+::)
+
+:download
+setlocal enabledelayedexpansion
 set "installer_path=%~dp0%installer_name%"
+:: https://vscode.download.prss.microsoft.com/dbazure/download/stable/848b80aeb52026648a8ff9f7c45a9b0a80641e2e/VSCodeUserSetup-x64-1.100.2.exe
+set "download_url=https://vscode.download.prss.microsoft.com/dbazure/download/stable/%commit_id%/%url_param%"
 
 echo Checking local installer...
 echo ---------------------------
@@ -161,17 +203,17 @@ if exist "%installer_path%" (
     if !exist_size! LSS !min_valid_size! (
         echo Corrupted file detected ^(!exist_size! bytes^)
         del /f /q "%installer_path%"
-        goto download
+        goto download_start
     )
     
     choice /m "Use existing installer (Y/N)"
-    if errorlevel 2 goto download
+    if errorlevel 2 goto download_start
     goto install
 )
 
-:download
-echo Downloading Visual Studio Code...
-echo ---------------------------------
+:download_start
+echo Downloading Visual Studio Code (%install_type% install %download_url%)...
+echo --------------------------------------------------------
 curl -L -o "%installer_path%" --progress-bar "%download_url%"
 if errorlevel 1 (
     echo Download failed with error code %errorlevel%
@@ -192,19 +234,57 @@ if !final_size! LSS 50000000 (
     goto menu
 )
 
-echo Starting installation with desktop shortcut...
-echo ----------------------------------------------
+echo Starting %install_type% installation...
+echo -------------------------------------
+echo 正在后台安装...
+
 start /wait "" "%installer_path%" /VERYSILENT /NORESTART /MERGETASKS=desktopicon
 
-echo Creating desktop shortcut...
-echo ---------------------------
-set "vscode_exe=%LOCALAPPDATA%\Programs\Microsoft VS Code\Code.exe"
-set "desktop_shortcut=%USERPROFILE%\Desktop\Visual Studio Code.lnk"
+:: 仅User模式创建快捷方式,system模式下上面有了 /MERGETASKS=desktopicon 参数后可以自动创建
+if "%install_type%"=="user" (
+    echo Creating desktop shortcut...
+    echo ---------------------------
+    set "vscode_exe=%install_path%\Code.exe"
+    
+    :: 验证目标文件存在性
+    if not exist "%vscode_exe%" (
+        echo Error: Target executable not found at "%vscode_exe%"
+        pause
+        goto menu
+    )
 
-:: 通过PowerShell创建快捷方式
-powershell -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%desktop_shortcut%'); $s.TargetPath = '%vscode_exe%'; $s.Save()"
+    :: 使用安全路径构造方法
+    setlocal enabledelayedexpansion
+    set "ps_script=$desktop = [Environment]::GetFolderPath('Desktop');"
+    set "ps_script=!ps_script! $shortcutPath = Join-Path -Path $desktop -ChildPath 'Visual Studio Code.lnk';"
+    set "ps_script=!ps_script! $ws = New-Object -ComObject WScript.Shell;"
+    set "ps_script=!ps_script! $sc = $ws.CreateShortcut($shortcutPath);"
+    set "ps_script=!ps_script! $sc.TargetPath = '%vscode_exe: =% ';"
+    set "ps_script=!ps_script! $sc.WorkingDirectory = '%%install_path%%';"
+    set "ps_script=!ps_script! $sc.IconLocation = '%vscode_exe: =% ,0';"
+    set "ps_script=!ps_script! $sc.Save();"
+    
+    :: 执行PowerShell命令
+    echo Executing PowerShell command:
+    echo !ps_script!
+    powershell -Command "!ps_script!"
+    
+    :: 验证结果
+    if exist "%USERPROFILE%\Desktop\Visual Studio Code.lnk" (
+        echo Shortcut verification passed
+        :: 显示快捷方式属性
+        echo Shortcut properties:
+        powershell -Command "$sh = New-Object -ComObject Shell.Application; $item = $sh.Namespace('%USERPROFILE%\Desktop').ParseName('Visual Studio Code.lnk'); $item | Select-Object Name, @{n='Target';e={$_.GetLink.Target}}, @{n='Icon';e={$_.GetLink.IconLocation}}"
+    ) else (
+        echo Shortcut creation failed
+    )
+    endlocal
+)
 
-echo Operation completed!
+:: echo Cleaning up installer...
+:: del /f /q "%installer_path%"
+
+echo Installation completed!
 endlocal
 pause
 goto menu
