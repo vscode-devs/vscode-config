@@ -1,0 +1,28 @@
+{
+    // 工作台配置
+    "workbench.iconTheme": "material-icon-theme",  // 图标主题
+    "workbench.colorTheme": "One Dark Pro Darker", // vscode活动栏(资源管理器、搜索、插件等图标)的位置显示在顶部
+    "workbench.sideBar.location": "left",          // vscode侧边栏的位置，可选值："left"（默认）或 "right"
+    "workbench.activityBar.location": "top",       // 自动猜测文件编码方式
+
+    // 文本编辑窗口配置
+    "editor.fontSize": 16,          // 控制字体大小
+    "editor.lineHeight": 20,        // 行间距
+    "editor.fontWeight": 700,       // 控制字体粗细
+    "editor.fontFamily": "'Courier New', '思源黑体'", // 字体，Courier New作英文字体，思源黑体作中文字体
+    "editor.wordBasedSuggestions": "off",            // 关闭基于文件中单词来联想的功能（语言自带的联想就够了，开了这个会导致用vscode写MarkDown时的中文引号异常联想）
+    "editor.wordWrap": "on",                         // 在文件内容溢出vscode显示区域时自动折行
+    "editor.renderControlCharacters": true,          // 编辑器中显示不可见的控制字符
+    "editor.renderWhitespace": "selection",          // 仅在选定文本上呈现空白字符(选中文本的时候以一个小灰点的样子使空格可见)
+
+    // 文件相关配置
+    "files.autoSave": "onFocusChange",       // off | afterDelay | onFocusChange | onWindowChange
+    "files.autoGuessEncoding": true,         // 编辑器将尝试在打开文件时猜测字符集编码
+    "files.encoding": "utf8",                // 默认按照utf8格式打开文件（按需求可配置成gb2312）
+
+    // 更新相关配置
+    "update.mode": "manual",             // none | manual vscode自动更新配置
+    "extensions.autoUpdate": false,      // 插件自动更新
+    "extensions.autoCheckUpdates": false,
+    "security.workspace.trust.untrustedFiles": "open", // 插件自动检查更新
+}
