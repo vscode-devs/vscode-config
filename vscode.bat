@@ -10,14 +10,16 @@ echo -------------------------------
 echo 1. Backup VSCode Settings
 echo 2. Restore VSCode Settings
 echo 3. Uninstall VSCode (User Mode)
-echo 4. Exit
+echo 4. Clean Residual Files
+echo 5. Exit
 echo -------------------------------
 set /p choice=Please select an option (enter number): 
 
 if "%choice%"=="1" goto backup
 if "%choice%"=="2" goto restore
 if "%choice%"=="3" goto uninstall
-if "%choice%"=="4" exit /b
+if "%choice%"=="4" goto clean
+if "%choice%"=="5" exit /b
 echo Invalid selection, please try again
 timeout /t 2 > nul
 goto menu
@@ -70,7 +72,6 @@ goto menu
 :uninstall
 setlocal EnableDelayedExpansion
 
-:: 常见用户模式安装路径
 set "paths[0]=%LOCALAPPDATA%\Programs\Microsoft VS Code"
 set "paths[1]=%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code"
 set "paths[2]=%ProgramFiles%\Microsoft VS Code"
@@ -108,7 +109,7 @@ if defined uninstaller (
     echo NOTE: This will start the GUI uninstaller
     echo Close this window ONLY AFTER uninstall completes
     timeout /t 5
-    start "" "%uninstaller%"
+    start /wait "" "%uninstaller%"
 ) else (
     echo Error: No valid uninstaller found
     echo Possible solutions:
@@ -118,4 +119,21 @@ if defined uninstaller (
 )
 pause
 endlocal
+goto menu
+
+:: Clean residual files
+:clean
+echo Cleaning residual files...
+echo ---------------------------
+echo This will delete:
+echo - %USERPROFILE%\.vscode
+echo - %APPDATA%\Code
+echo ---------------------------
+
+rd /s /q "%USERPROFILE%\.vscode" 2>nul && echo Deleted: %USERPROFILE%\.vscode
+rd /s /q "%APPDATA%\Code" 2>nul && echo Deleted: %APPDATA%\Code
+
+echo ---------------------------
+echo Cleanup completed
+pause
 goto menu
