@@ -318,54 +318,70 @@ goto menu
 :: 6. 从json文件创建yaml文件
 :: -------------------------------------------------
 :generate_manifest
-setlocal
-echo Generating extension manifest...
+echo Generating extension manifests...
 echo -------------------------------
 
-set "file_map[0].input=%~dp0settings\user-extensions.json"
-set "file_map[0].output=%~dp0settings\user-extensions.yaml"
-set "file_map[1].input=%~dp0settings\ssh-remote-extensions.json"
-set "file_map[1].output=%~dp0settings\ssh-remote-extensions.yaml"
+call :GenerateExtensionManifest "%~dp0settings\user-extensions.json" "%~dp0settings\user-extensions.yaml"
+call :GenerateExtensionManifest "%~dp0settings\ssh-remote-extensions.json" "%~dp0settings\ssh-remote-extensions.yaml"
 
-if not exist "%file_map[0].input%" (
-    echo Error: Extensions file not found
-    echo Run Backup first to create user-extensions.json
-    pause
-    endlocal
-    goto menu
-)
-echo file_map[0].input=%file_map[0].input%
-powershell -Command "$json=Get-Content -LiteralPath '%file_map[0].input%' -Raw | ConvertFrom-Json; $output=@(); foreach($ext in $json){ $id=$ext.identifier.id; $ver=$ext.version; $parts=$id -split '\.'; $publisher=$parts[0]; $name=$parts[1..($parts.Count-1)] -join '.'; $vsixUrl='https://marketplace.visualstudio.com/_apis/public/gallery/publishers/'+$publisher.ToLower()+'/vsextensions/'+$name.ToLower()+'/'+$ver+'/vspackage'; $output+='' + $name + ':'; $output+='  publisher: ' + $publisher; $output+='  extension: ' + $name; $output+='  version: ' + $ver; $output+='  vsix-url: ' + $vsixUrl; $output+=''; } $output | Out-File -LiteralPath '%file_map[0].output%' -Encoding UTF8;"
-
-if exist "%file_map[0].output%" (
-    echo Manifest generated successfully:
-    echo   %file_map[0].output%
-    type "%file_map[0].output%"
-) else (
-    echo Failed to generate manifest
-)
-
-if not exist "%file_map[1].input%" (
-    echo Error: Extensions file not found
-    echo Run Backup first to create user-extensions.json
-    pause
-    endlocal
-    goto menu
-)
-echo file_map[1].input=%file_map[1].input%
-powershell -Command "$json=Get-Content -LiteralPath '%file_map[1].input%' -Raw | ConvertFrom-Json; $output=@(); foreach($ext in $json){ $id=$ext.identifier.id; $ver=$ext.version; $parts=$id -split '\.'; $publisher=$parts[0]; $name=$parts[1..($parts.Count-1)] -join '.'; $vsixUrl='https://marketplace.visualstudio.com/_apis/public/gallery/publishers/'+$publisher.ToLower()+'/vsextensions/'+$name.ToLower()+'/'+$ver+'/vspackage'; $output+='' + $name + ':'; $output+='  publisher: ' + $publisher; $output+='  extension: ' + $name; $output+='  version: ' + $ver; $output+='  vsix-url: ' + $vsixUrl; $output+=''; } $output | Out-File -LiteralPath '%file_map[1].output%' -Encoding UTF8;"
-
-if exist "%file_map[1].output%" (
-    echo Manifest generated successfully:
-    echo   %file_map[1].output%
-    type "%file_map[1].output%"
-) else (
-    echo Failed to generate manifest
-)
-
+echo All manifests processed!
 pause
-endlocal
 goto menu
+
+:: GenerateExtensionManifest 函数
+:: 参数1: 输入的json文件路径
+:: 参数2: 输出的yaml文件路径
+:GenerateExtensionManifest
+setlocal
+set "_input_file=%~1"
+set "_output_file=%~2"
+
+echo Processing: %_input_file%
+
+:: 检查输入文件是否存在
+if not exist "%_input_file%" (
+    echo Error: Input file not found
+    echo   Missing: %_input_file%
+    echo Skipping this manifest...
+    endlocal
+    exit /b 1
+)
+
+:: 调用PowerShell转换
+powershell -Command ^
+    "$json=Get-Content -LiteralPath '%_input_file%' -Raw | ConvertFrom-Json;" ^
+    "$output=@();" ^
+    "foreach($ext in $json){" ^
+    "  $id=$ext.identifier.id;" ^
+    "  $ver=$ext.version;" ^
+    "  $parts=$id -split '\.';" ^
+    "  $publisher=$parts[0];" ^
+    "  $name=$parts[1..($parts.Count-1)] -join '.';" ^
+    "  $vsixUrl='https://marketplace.visualstudio.com/_apis/public/gallery/publishers/'+$publisher.ToLower()+'/vsextensions/'+$name.ToLower()+'/'+$ver+'/vspackage';" ^
+    "  $output+='' + $name + ':';" ^
+    "  $output+='  publisher: ' + $publisher;" ^
+    "  $output+='  extension: ' + $name;" ^
+    "  $output+='  version: ' + $ver;" ^
+    "  $output+='  vsix-url: ' + $vsixUrl;" ^
+    "  $output+='';" ^
+    "}" ^
+    "if(-not (Test-Path -Path (Split-Path '%_output_file%'))) {" ^
+    "  New-Item -ItemType Directory -Path (Split-Path '%_output_file%') | Out-Null" ^
+    "}" ^
+    "$output | Out-File -LiteralPath '%_output_file%' -Encoding UTF8;"
+
+:: 验证输出
+if exist "%_output_file%" (
+    echo Successfully generated:
+    echo   %_output_file%
+    type "%_output_file%"
+) else (
+    echo Failed to generate manifest
+    echo Check PowerShell execution
+)
+
+endlocal
+exit /b 0
 
 :: 7. 下载vscode server
 :: -------------------------------------------------
