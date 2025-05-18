@@ -12,7 +12,8 @@ echo 2. Restore VSCode Settings
 echo 3. Uninstall VSCode (User Mode)
 echo 4. Clean Residual Files
 echo 5. Download and Install VSCode
-echo 6. Exit
+echo 6. Generate Extension Manifest
+echo 7. Exit
 echo -------------------------------
 set /p choice=Please select an option (enter number): 
 
@@ -21,7 +22,8 @@ if "%choice%"=="2" goto restore
 if "%choice%"=="3" goto uninstall
 if "%choice%"=="4" goto clean
 if "%choice%"=="5" goto install_menu
-if "%choice%"=="6" exit /b
+if "%choice%"=="6" goto generate_manifest
+if "%choice%"=="7" exit /b
 echo Invalid selection, please try again
 timeout /t 2 > nul
 goto menu
@@ -303,3 +305,34 @@ echo Installation completed!
 pause
 endlocal
 goto menu
+
+:generate_manifest
+setlocal
+set "input_file=%~dp0settings\user-extensions.json"
+set "output_file=%~dp0extensions-manifest.yaml"
+
+echo Generating extension manifest...
+echo -------------------------------
+
+if not exist "%input_file%" (
+    echo Error: Extensions file not found
+    echo Run Backup first to create user-extensions.json
+    pause
+    endlocal
+    goto menu
+)
+
+echo input_file=%input_file%
+powershell -Command "$json=Get-Content -LiteralPath '%input_file%' -Raw | ConvertFrom-Json; $output=@(); foreach($ext in $json){ $id=$ext.identifier.id; $ver=$ext.version; $parts=$id -split '\.'; $publisher=$parts[0]; $name=$parts[1..($parts.Count-1)] -join '.'; $vsixUrl='https://marketplace.visualstudio.com/_apis/public/gallery/publishers/'+$publisher.ToLower()+'/vsextensions/'+$name.ToLower()+'/'+$ver+'/vspackage'; $output+='' + $name + ':'; $output+='  publisher: ' + $publisher; $output+='  extension: ' + $name; $output+='  version: ' + $ver; $output+='  vsix-url: ' + $vsixUrl; $output+=''; } $output | Out-File -LiteralPath '%output_file%' -Encoding UTF8;"
+
+if exist "%output_file%" (
+    echo Manifest generated successfully:
+    echo   %output_file%
+    type "%output_file%"
+) else (
+    echo Failed to generate manifest
+)
+pause
+endlocal
+goto menu
+
