@@ -12,7 +12,7 @@
     "workbench.activityBar.location": "top",       // vscode活动栏(资源管理器、搜索、插件等图标)的位置显示在顶部
 	"workbench.list.smoothScrolling": true,        // 使文件列表滚动变平滑
 	"workbench.editor.enablePreview": false,       // 打开文件时不是“预览”模式，即在编辑一个文件时打开编辑另一个文件不会覆盖当前编辑的文件而是新建一个标签页
-	"workbench.editor.wrapTabs": true,             // 编辑器标签页在空间不足时以多行显示
+	"workbench.editor.wrapTabs": false,            // 关闭编辑器标签页在空间不足时以多行显示，关闭后会显示滚动条，鼠标滚轮滑动即可切换标签页
 	
 	// 主题外观自定义
 	/*
