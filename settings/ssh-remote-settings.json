@@ -1,0 +1,22 @@
+{
+    "clangd.arguments": [
+		"--log=verbose",
+		"--clang-tidy",
+		"--clang-tidy-checks=cppcoreguidelines-*,performance-*,bugprone-*,portability-*,modernize-*,google-*",
+		"--compile-commands-dir=${workspacefolder}",
+		"--completion-style=detailed",
+		"--background-index",
+		"-j=16",
+		"--all-scopes-completion",
+		"--header-insertion-decorators",
+		"--header-insertion=never",
+		"--pch-storage=disk",
+		"--function-arg-placeholders=false",
+		"--cross-file-rename",
+		"--enable-config",
+		"--fallback-style=webkit",
+		"--ranking-model=heuristics",
+		"--pretty",
+	],
+	"clangd.path": "/home/sumu/2software/clangd_19.1.2/bin/clangd",
+}
