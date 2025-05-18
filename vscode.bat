@@ -13,7 +13,8 @@ echo 3. Uninstall VSCode (User Mode)
 echo 4. Clean Residual Files
 echo 5. Download and Install VSCode
 echo 6. Generate Extension Manifest
-echo 7. Exit
+echo 7. Download VSCode Server
+echo 9. Exit
 echo -------------------------------
 set /p choice=Please select an option (enter number): 
 
@@ -23,7 +24,8 @@ if "%choice%"=="3" goto uninstall
 if "%choice%"=="4" goto clean
 if "%choice%"=="5" goto install_menu
 if "%choice%"=="6" goto generate_manifest
-if "%choice%"=="7" exit /b
+if "%choice%"=="7" goto download_server
+if "%choice%"=="9" exit /b
 echo Invalid selection, please try again
 timeout /t 2 > nul
 goto menu
@@ -336,3 +338,167 @@ pause
 endlocal
 goto menu
 
+:download_server
+setlocal enabledelayedexpansion
+echo Checking VSCode installation...
+echo ------------------------------
+
+:: 定义安全路径数组（使用延迟扩展）
+set "paths[0]=%LOCALAPPDATA%\Programs\Microsoft VS Code"
+set "paths[1]=%ProgramFiles%\Microsoft VS Code"
+set "paths[2]=%ProgramFiles(x86)%\Microsoft VS Code"
+set "paths[3]=%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code"
+set "paths[4]=C:\Programs\VSCode"
+
+:: 安全遍历路径数组
+set found=0
+for %%i in (0 1 2 3 4) do (
+    set "install_dir=!paths[%%i]!"
+    set "product_json=!install_dir!\resources\app\product.json"
+    
+    echo Checking: "!install_dir!"
+    if exist "!product_json!" (
+        echo Found valid installation at:
+        echo   "!install_dir!"
+        set /a found+=1
+        goto :extract_info
+    )
+)
+
+:: 新增自定义路径处理
+if !found! equ 0 (
+    echo Enter custom installation path:
+    set /p "custom_path=Example: C:\MyVSCode : "
+    set "product_json=!custom_path!\resources\app\product.json"
+    if exist "!product_json!" (
+        set "install_dir=!custom_path!"
+        set /a found+=1
+        goto :extract_info
+    ) else (
+        echo Error: Missing product.json
+        echo Expected path: "!product_json!"
+        pause
+        endlocal
+        goto menu
+    )
+)
+
+:extract_info
+:: 使用改进的PowerShell解析命令
+set "ps_cmd=Get-Content -LiteralPath '!product_json!' -Raw | ConvertFrom-Json | ForEach-Object { $_.version + '|' + $_.commit }"
+for /f "tokens=1,2 delims=|" %%a in ('powershell -Command "!ps_cmd!"') do (
+    set "version=%%a"
+    set "commit_id=%%b"
+)
+
+:: 清理版本号（更安全的处理方式）
+set "version=!version: =!"
+set "version=!version:"=!"
+if "!version:~-1!"=="," set "version=!version:~0,-1!"
+
+:: 验证输出
+echo Current Version: !version!
+echo Commit ID      : !commit_id!
+
+:: 创建下载目录
+set "download_dir=%~dp0vscode-server"
+if not exist "!download_dir!" mkdir "!download_dir!"
+
+:: 版本比较逻辑（使用PowerShell）
+echo Base Version   : 1.86.2
+::set "version=1.66.0"
+:: 调用比较函数
+call :CompareVersion "%version%" "1.86.2"
+set compare_ret=!errorlevel!
+if !compare_ret! equ 0 (
+    echo CompareVersion : [%version%^<=1.86.2]
+    set "url=https://update.code.visualstudio.com/commit:!commit_id!/server-linux-x64/stable"
+    set "filename=vscode-server-linux-x64-old-!commit_id!.tar.gz"
+    ::echo   Downloading !filename! from !url!
+    call :DownloadPackage "!url!" "!filename!" "!download_dir!"
+) else (
+    echo CompareVersion : [%version%^>1.86.2]
+    set "url=https://vscode.download.prss.microsoft.com/dbazure/download/stable/!commit_id!/vscode-server-linux-x64.tar.gz"
+    set "filename=vscode-server-linux-x64-!commit_id!.tar.gz"
+    ::echo   Downloading !filename! from !url!
+    call :DownloadPackage "!url!" "!filename!" "!download_dir!"
+
+    set "url=https://vscode.download.prss.microsoft.com/dbazure/download/stable/!commit_id!/vscode_cli_alpine_x64_cli.tar.gz"
+    set "filename=vscode-cli-alpine-x64-!commit_id!.tar.gz"
+    ::echo   Downloading !filename! from !url!
+    call :DownloadPackage "!url!" "!filename!" "!download_dir!"
+)
+
+echo Download completed!
+echo Files saved to: "!download_dir!"
+dir /b "!download_dir!"
+pause
+endlocal
+goto menu
+
+: 封装的下载函数
+:: 参数：%1=下载URL, %2=文件名, %3=保存目录
+:DownloadPackage
+setlocal enabledelayedexpansion
+set "_url=%~1"
+set "_file=%~2"
+set "_dir=%~3"
+set "_path="%_dir%\%_file%""
+
+echo --------------------------
+echo Checking package: "%_file%"
+echo From: "%_url%"
+
+if exist !_path! (
+    echo [Info] Package exists, skip download
+) else (
+    echo Downloading new package...
+    curl -L -o !_path! --create-dirs --progress-bar "!_url!"
+    if !errorlevel! neq 0 (
+        echo [ERROR] Download failed for "!_file!"
+        exit /b 1
+    )
+    echo [Success] Downloaded: "!_file!"
+)
+endlocal
+exit /b 0
+
+:: 版本比较函数
+:: 参数1: 当前版本
+:: 参数2: 基准版本
+:: 返回: errorlevel 0(<=基准版本) 或 1(>基准版本)
+:CompareVersion
+setlocal
+set "current=%~1"
+set "base=%~2"
+
+:: 清理版本号（移除非数字和点的字符）
+set "current=!current:.= !"
+set "base=!base:.= !"
+
+:: 拆分版本号为三个部分
+for /f "tokens=1-3" %%a in ("!current!") do (
+    set /a cur_major=%%a
+    set /a cur_minor=%%b
+    set /a cur_build=%%c
+)
+
+for /f "tokens=1-3" %%a in ("!base!") do (
+    set /a base_major=%%a
+    set /a base_minor=%%b
+    set /a base_build=%%c
+)
+
+:: 比较逻辑
+if !cur_major! gtr !base_major! ( exit /b 1 )
+if !cur_major! lss !base_major! ( exit /b 0 )
+
+if !cur_minor! gtr !base_minor! ( exit /b 1 )
+if !cur_minor! lss !base_minor! ( exit /b 0 )
+
+if !cur_build! gtr !base_build! ( exit /b 1 )
+
+exit /b 0
+
+:EOF
+endlocal
