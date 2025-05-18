@@ -432,6 +432,66 @@ if !compare_ret! equ 0 (
 echo Download completed!
 echo Files saved to: "!download_dir!"
 dir /b "!download_dir!"
+
+:: 生成安装脚本
+setlocal enabledelayedexpansion
+set "template_dir=%~dp0template"
+set "output_dir=%~dp0vscode-server"
+set "commit_id=%commit_id%"
+
+echo ----------- Generating installation script ---------------
+:: 验证模板文件存在性
+set "old_template=!template_dir!\vscode-server-old.sh"
+set "new_template=!template_dir!\vscode-server-new.sh"
+
+if not exist "!old_template!" (
+    echo Error: Old template not found at:
+    echo   !old_template!
+    pause
+    goto menu
+)
+if not exist "!new_template!" (
+    echo Error: New template not found at:
+    echo   !new_template!
+    pause
+    goto menu
+)
+
+:: 创建输出目录
+if not exist "!output_dir!" (
+    mkdir "!output_dir!"
+    echo Created output directory: !output_dir!
+)
+
+:: 根据版本选择模板
+set "selected_template="
+if !compare_ret! equ 0 (
+    set "selected_template=!old_template!"
+    echo Using OLD template format
+) else (
+    set "selected_template=!new_template!"
+    echo Using NEW template format
+)
+
+:: 生成目标文件
+set "output_file=!output_dir!\install-vscode-server.sh"
+:: 文件生成逻辑
+powershell -Command ^
+    "$commit = '%commit_id%';" ^
+    "$templatePath = '!selected_template!';" ^
+    "$outputPath = '!output_file!';" ^
+    "$utf8 = New-Object System.Text.UTF8Encoding $false;" ^
+    "$content = [System.IO.File]::ReadAllText($templatePath, $utf8);" ^
+    "$content = $content.Replace('${commit_id}', $commit) -replace \"`r\",'';" ^
+    "[System.IO.File]::WriteAllText($outputPath, $content, $utf8);" ^
+    "if ([System.IO.File]::ReadAllBytes($outputPath)[0] -eq 0xEF) { exit 1 }"
+    
+if errorlevel 1 (
+    echo ERROR: BOM检测失败,请检查模板文件编码
+    pause
+    goto menu
+)
+
 pause
 endlocal
 goto menu
@@ -445,7 +505,7 @@ set "_file=%~2"
 set "_dir=%~3"
 set "_path="%_dir%\%_file%""
 
-echo --------------------------
+echo ----------- DownloadPackage ---------------
 echo Checking package: "%_file%"
 echo From: "%_url%"
 
