@@ -1,9 +1,9 @@
 {
     // 工作台配置
     "workbench.iconTheme": "material-icon-theme",  // 图标主题
-    "workbench.colorTheme": "One Dark Pro Darker", // vscode活动栏(资源管理器、搜索、插件等图标)的位置显示在顶部
+    "workbench.colorTheme": "One Dark Pro Darker", // 界面主题
     "workbench.sideBar.location": "left",          // vscode侧边栏的位置，可选值："left"（默认）或 "right"
-    "workbench.activityBar.location": "top",       // 自动猜测文件编码方式
+    "workbench.activityBar.location": "top",       // vscode活动栏(资源管理器、搜索、插件等图标)的位置显示在顶部
 
     // 文本编辑窗口配置
     "editor.fontSize": 16,          // 控制字体大小
@@ -15,6 +15,15 @@
     "editor.renderControlCharacters": true,          // 编辑器中显示不可见的控制字符
     "editor.renderWhitespace": "selection",          // 仅在选定文本上呈现空白字符(选中文本的时候以一个小灰点的样子使空格可见)
 
+    // 终端参数配置
+    "terminal.integrated.cursorStyle": "block",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.lineHeight": 1,
+    "terminal.integrated.letterSpacing": 0.5,
+    "terminal.integrated.fontSize": 14,  
+    "terminal.integrated.fontFamily": "Courier",
+    "terminal.integrated.fontWeight": 600,
+
     // 文件相关配置
     "files.autoSave": "onFocusChange",       // off | afterDelay | onFocusChange | onWindowChange
     "files.autoGuessEncoding": true,         // 编辑器将尝试在打开文件时猜测字符集编码
@@ -23,6 +32,5 @@
     // 更新相关配置
     "update.mode": "manual",             // none | manual vscode自动更新配置
     "extensions.autoUpdate": false,      // 插件自动更新
-    "extensions.autoCheckUpdates": false,
-    "security.workspace.trust.untrustedFiles": "open", // 插件自动检查更新
+    "extensions.autoCheckUpdates": false,// 插件自动检查更新
 }
