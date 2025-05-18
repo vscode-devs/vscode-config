@@ -2,6 +2,8 @@
 chcp 65001 > nul
 title VSCode Settings Manager
 
+:: 菜单
+:: -------------------------------------------------
 :menu
 cls
 echo -------------------------------
@@ -30,7 +32,8 @@ echo Invalid selection, please try again
 timeout /t 2 > nul
 goto menu
 
-:: Backup settings to local
+:: 1. Backup settings to local
+:: -------------------------------------------------
 :backup
 set "backup_dir=%~dp0settings"
 set "user_settings=%APPDATA%\Code\User\settings.json"
@@ -69,7 +72,8 @@ echo Backup completed
 pause
 goto menu
 
-:: Restore settings from backup
+:: 2. Restore settings from backup
+:: -------------------------------------------------
 :restore
 set "vscode_settings=%APPDATA%\Code\User\settings.json"
 set "backup_file=%~dp0settings\user-settings.json"
@@ -88,7 +92,8 @@ echo [Target]  %vscode_settings%
 pause
 goto menu
 
-:: Uninstall VSCode (User Mode)
+:: 3. Uninstall VSCode (User Mode)
+:: -------------------------------------------------
 :uninstall
 setlocal EnableDelayedExpansion
 
@@ -144,7 +149,8 @@ pause
 endlocal
 goto menu
 
-:: Clean residual files
+:: 4. Clean residual files
+:: -------------------------------------------------
 :clean
 echo Cleaning residual files...
 echo ---------------------------
@@ -161,7 +167,8 @@ echo Cleanup completed
 pause
 goto menu
 
-:: 新增下载安装功能
+:: 5. 下载安装vscode
+:: -------------------------------------------------
 :install_menu
 cls
 echo -------------------------------
@@ -308,6 +315,8 @@ pause
 endlocal
 goto menu
 
+:: 6. 从json文件创建yaml文件
+:: -------------------------------------------------
 :generate_manifest
 setlocal
 set "input_file=%~dp0settings\user-extensions.json"
@@ -338,6 +347,8 @@ pause
 endlocal
 goto menu
 
+:: 7. 下载vscode server
+:: -------------------------------------------------
 :download_server
 setlocal enabledelayedexpansion
 echo Checking VSCode installation...
