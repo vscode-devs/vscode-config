@@ -349,7 +349,7 @@ if not exist "%_input_file%" (
 
 :: 调用PowerShell转换
 powershell -Command ^
-    "$json=Get-Content -LiteralPath '%_input_file%' -Raw | ConvertFrom-Json;" ^
+    "$json=Get-Content -LiteralPath '%_input_file%' -Raw -Encoding UTF8 | ConvertFrom-Json;" ^
     "$output=@();" ^
     "foreach($ext in $json){" ^
     "  $id=$ext.identifier.id;" ^

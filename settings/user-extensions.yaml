@@ -58,9 +58,9 @@ shellman:
   version: 5.7.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/remisa/vsextensions/shellman/5.7.0/vspackage
 
-bash-ide-vscode:
-  publisher: mads-hartmann
-  extension: bash-ide-vscode
-  version: 1.43.0
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/mads-hartmann/vsextensions/bash-ide-vscode/1.43.0/vspackage
+background-cover:
+  publisher: manasxx
+  extension: background-cover
+  version: 2.7.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/manasxx/vsextensions/background-cover/2.7.0/vspackage
 

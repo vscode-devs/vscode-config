@@ -78,13 +78,19 @@
     "extensions.autoUpdate": false,      // 插件自动更新
     "extensions.autoCheckUpdates": false,// 插件自动检查更新
 	"extensions.ignoreRecommendations": false, // 扩展建议的通知,有时候就很烦这个右下角的建议弹窗
-
+	// manasxx.background-cover
+	"backgroundCover.imagePath": "d:\\devSoftware\\vscode-dev\\sumu\\sumu002.jpg", 
+	"backgroundCover.opacity": 0.13, // 不透明度
+	"backgroundCover.blur": 3,      // 模糊度
 	// 搜索相关配置
 	"search.followSymlinks": false, // 据说可以减少vscode的CPU和内存占用
 	"search.exclude": {             // vscode的搜索还是很快的，但是有些文件夹没有必要去搜索，就可以在这里屏蔽
 		"**/node_modules": true,
 		"**/bower_components": true,
 		"**/*.code-search": true
+	},
+	"remote.SSH.remotePlatform": {
+		"192.168.10.116": "linux"
 	},
 
 }
