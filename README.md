@@ -862,7 +862,32 @@ https://marketplace.visualstudio.com/_apis/public/gallery/publishers/xaver/vsext
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/xaver/vsextensions/clang-format/1.9.0/vspackage
 
-#### <font size=3>8.2.2 插件配置</font>
+#### <font size=3>8.2.2 clang-format</font>
+
+好像是还需要装个clang-format的可执行程序，但是感觉装插件的时候自动装了？我是看我的ubuntu中直接有一个，但是版本比较老：
+
+<img src="README/img/image-20250519075313217.png" alt="image-20250519075313217" />
+
+可以去github下一个新版本的解压安装：[Releases · llvm/llvm-project](https://github.com/llvm/llvm-project)，但是看着好像比较大，我这里直接选了当前最新版本[llvm/llvm-project at llvmorg-20.1.5](https://github.com/llvm/llvm-project/tree/llvmorg-20.1.5)：
+
+<img src="README/img/image-20250519075633817.png" alt="image-20250519075633817" />
+
+#### <font size=3>8.2.3 插件配置</font>
+
+- settings配置
+
+```json
+"clang-format.executable": "/home/sumu/2software/LLVM-20.1.5-Linux-X64/bin/clang-format",
+	"clang-format.assumeFilename": "/home/sumu/2software/LLVM-20.1.5-Linux-X64/config/.clang-format",
+	"[c]": {
+		"editor.defaultFormatter": "xaver.clang-format"
+	},
+	"[cpp]": {
+		"editor.defaultFormatter": "xaver.clang-format"
+	},
+```
+
+- 格式化风格文件配置
 
 [Clang-Format Style Options — Clang 21.0.0git documentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
 
