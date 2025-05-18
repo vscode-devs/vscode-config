@@ -372,9 +372,9 @@ powershell -Command ^
 
 :: 验证输出
 if exist "%_output_file%" (
-    echo Successfully generated:
+    echo Successfully generated %_output_file%
     echo   %_output_file%
-    type "%_output_file%"
+    type "%_output_file%" > NUL
 ) else (
     echo Failed to generate manifest
     echo Check PowerShell execution
