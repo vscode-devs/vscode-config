@@ -187,21 +187,22 @@ echo Invalid selection, please try again
 timeout /t 2 > nul
 goto install_menu
 
-
 :download_user
 set "install_type=user"
+set "vscode_version=1.100.2"
 set "commit_id=848b80aeb52026648a8ff9f7c45a9b0a80641e2e"
-set "url_param=VSCodeUserSetup-x64-1.100.2.exe"
-set "installer_name=VSCodeUserSetup-x64-1.100.2.exe"
+set "installer_name=VSCodeUserSetup-x64-%vscode_version%.exe"
 set "install_path=%LOCALAPPDATA%\Programs\Microsoft VS Code"
+set "download_url=https://update.code.visualstudio.com/%vscode_version%/win32-x64-user/stable"
 goto download
 
 :download_system
 set "install_type=system"
+set "vscode_version=1.100.2"
 set "commit_id=848b80aeb52026648a8ff9f7c45a9b0a80641e2e"
-set "url_param=VSCodeSetup-x64-1.100.2.exe"
-set "installer_name=VSCodeSetup-x64-1.100.2.exe"
+set "installer_name=VSCodeSetup-x64-%vscode_version%.exe"
 set "install_path=%ProgramFiles%\Microsoft VS Code"
+set "download_url=https://update.code.visualstudio.com/%vscode_version%/win32-x64/stable"
 
 :: 检查管理员权限
 ::net session >nul 2>&1
@@ -215,8 +216,7 @@ set "install_path=%ProgramFiles%\Microsoft VS Code"
 :download
 setlocal enabledelayedexpansion
 set "installer_path=%~dp0%installer_name%"
-:: https://vscode.download.prss.microsoft.com/dbazure/download/stable/848b80aeb52026648a8ff9f7c45a9b0a80641e2e/VSCodeUserSetup-x64-1.100.2.exe
-set "download_url=https://vscode.download.prss.microsoft.com/dbazure/download/stable/%commit_id%/%url_param%"
+::set "download_url=https://vscode.download.prss.microsoft.com/dbazure/download/stable/%commit_id%/%url_param%"
 
 echo Checking local installer...
 echo ---------------------------
@@ -452,19 +452,20 @@ set "download_dir=%~dp0vscode-server"
 if not exist "!download_dir!" mkdir "!download_dir!"
 
 :: 版本比较逻辑（使用PowerShell）
-echo Base Version   : 1.86.2
+set "base_version=1.81.1"
+echo Base Version   : %base_version%
 ::set "version=1.66.0"
 :: 调用比较函数
-call :CompareVersion "%version%" "1.86.2"
+call :CompareVersion "%version%" "%base_version%"
 set compare_ret=!errorlevel!
 if !compare_ret! equ 0 (
-    echo CompareVersion : [%version%^<=1.86.2]
+    echo CompareVersion : [%version%^<=%base_version%]
     set "url=https://update.code.visualstudio.com/commit:!commit_id!/server-linux-x64/stable"
     set "filename=vscode-server-linux-x64-old-!commit_id!.tar.gz"
     ::echo   Downloading !filename! from !url!
     call :DownloadPackage "!url!" "!filename!" "!download_dir!"
 ) else (
-    echo CompareVersion : [%version%^>1.86.2]
+    echo CompareVersion : [%version%^>%base_version%]
     set "url=https://vscode.download.prss.microsoft.com/dbazure/download/stable/!commit_id!/vscode-server-linux-x64.tar.gz"
     set "filename=vscode-server-linux-x64-!commit_id!.tar.gz"
     ::echo   Downloading !filename! from !url!

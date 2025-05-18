@@ -1,9 +1,32 @@
 {
+	// window
+	"window.menuBarVisibility": "visible", // 在全屏模式下仍然显示窗口顶部菜单（没有菜单很难受）
+	"window.dialogStyle": "native",        // 就是弹窗的样式，个人还是喜欢默认的
+	// vscode更新相关配置
+    "update.mode": "manual",             // none | manual vscode 自动更新配置
+
     // 工作台配置
     "workbench.iconTheme": "material-icon-theme",  // 图标主题
     "workbench.colorTheme": "One Dark Pro Darker", // 界面主题
     "workbench.sideBar.location": "left",          // vscode侧边栏的位置，可选值："left"（默认）或 "right"
     "workbench.activityBar.location": "top",       // vscode活动栏(资源管理器、搜索、插件等图标)的位置显示在顶部
+	"workbench.list.smoothScrolling": true,        // 使文件列表滚动变平滑
+	"workbench.editor.enablePreview": false,       // 打开文件时不是“预览”模式，即在编辑一个文件时打开编辑另一个文件不会覆盖当前编辑的文件而是新建一个标签页
+	"workbench.editor.wrapTabs": true,             // 编辑器标签页在空间不足时以多行显示
+	
+	// 主题外观自定义
+	/*
+    "workbench.colorCustomizations": {
+		"editor.lineHighlightBackground": "#49b2b93d", // 修改光标所在行的背景色
+		"editor.lineHighlightBorder": "#ffffff30",     // 修改光标所在行的边框色
+		"editor.selectionBackground": "#f5f113",       // 设置用户选中代码段的颜色
+		"editor.selectionHighlightBackground": "#f5f113e5",
+		"tab.activeBackground": "#5f80629a"            // 设置活动tab窗口颜色
+	},
+	*/
+    // 资源管理器
+    "explorer.confirmDelete": true,     // 删除文件时是否弹出确认弹窗
+    "explorer.confirmDragAndDrop": true,// 往左边文件资源管理器拖动东西来移动/复制时是否显示确认窗口
 
     // 文本编辑窗口配置
     "editor.fontSize": 16,          // 控制字体大小
@@ -11,13 +34,22 @@
     "editor.fontWeight": 700,       // 控制字体粗细
     "editor.fontFamily": "'Courier New', '思源黑体'", // 字体，Courier New作英文字体，思源黑体作中文字体
     "editor.wordBasedSuggestions": "off",            // 关闭基于文件中单词来联想的功能（语言自带的联想就够了，开了这个会导致用vscode写MarkDown时的中文引号异常联想）
-    "editor.wordWrap": "on",                         // 在文件内容溢出vscode显示区域时自动折行
+    "editor.wordWrap": "off",                        // 在文件内容溢出vscode显示区域时自动折行
     "editor.renderControlCharacters": true,          // 编辑器中显示不可见的控制字符
     "editor.renderWhitespace": "selection",          // 仅在选定文本上呈现空白字符(选中文本的时候以一个小灰点的样子使空格可见)
+    "editor.smoothScrolling": true,                  // 使编辑器滚动变平滑
+    "editor.detectIndentation": false,               // 不基于文件内容选择缩进用制表符还是空格, 因为有时候VSCode的判断是错误的
+    "editor.insertSpaces": false,                    // 按tab时插入空格
+	"editor.copyWithSyntaxHighlighting": false,      // 复制代码时复制纯文本而不是连语法高亮也一起复制
+	"editor.suggest.snippetsPreventQuickSuggestions": false, // 这个开不开效果好像都一样，据说是因为一个bug，建议关掉
+	"editor.linkedEditing": true,                    // html标签自动重命名（终于不需要Auto Rename Tag插件了！）
+	"editor.cursorSmoothCaretAnimation": "off",      // 让光标移动、插入变得平滑(移动过程增加了动画)
 
     // 终端参数配置
+	"terminal.integrated.defaultProfile.windows": "Windows PowerShell", // 将终端设为power shell
+	"terminal.integrated.rightClickBehavior": "copyPaste",  // 在终端中右键时粘贴，改为default则会变成显示菜单
     "terminal.integrated.cursorStyle": "block",
-    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.cursorBlinking": true,    // 终端光标闪烁
     "terminal.integrated.lineHeight": 1,
     "terminal.integrated.letterSpacing": 0.5,
     "terminal.integrated.fontSize": 14,  
@@ -28,9 +60,31 @@
     "files.autoSave": "onFocusChange",       // off | afterDelay | onFocusChange | onWindowChange
     "files.autoGuessEncoding": true,         // 编辑器将尝试在打开文件时猜测字符集编码
     "files.encoding": "utf8",                // 默认按照utf8格式打开文件（按需求可配置成gb2312）
-
-    // 更新相关配置
-    "update.mode": "manual",             // none | manual vscode自动更新配置
+	"files.exclude": {        // 隐藏一些没有必要显示的文件夹，我一般还是喜欢放在工作区配置中，毕竟每个工程可能想要隐藏的不太一样
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.cache": true,
+	},
+	"files.watcherExclude": { // 不监视一些不必要监视的大文件夹以减少内存和CPU消耗
+		"**/.git/objects/**": true,
+		"**/.git/subtree-cache/**": true,
+		"**/node_modules/**": true,
+		"**/tmp/**": true,
+		"**/bower_components/**": true,
+		"**/dist/**": true,
+		"**/.cache": true,
+	},
+    // 扩展相关配置
     "extensions.autoUpdate": false,      // 插件自动更新
     "extensions.autoCheckUpdates": false,// 插件自动检查更新
+	"extensions.ignoreRecommendations": false, // 扩展建议的通知,有时候就很烦这个右下角的建议弹窗
+
+	// 搜索相关配置
+	"search.followSymlinks": false, // 据说可以减少vscode的CPU和内存占用
+	"search.exclude": {             // vscode的搜索还是很快的，但是有些文件夹没有必要去搜索，就可以在这里屏蔽
+		"**/node_modules": true,
+		"**/bower_components": true,
+		"**/*.code-search": true
+	},
+
 }
