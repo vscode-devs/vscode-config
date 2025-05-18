@@ -7,7 +7,7 @@ cls
 echo -------------------------------
 echo    VSCode Settings Manager
 echo -------------------------------
-echo 1. Backup VSCode Settings
+echo 1. Backup VSCode Settings and extensions
 echo 2. Restore VSCode Settings
 echo 3. Uninstall VSCode (User Mode)
 echo 4. Clean Residual Files
@@ -28,26 +28,40 @@ goto menu
 
 :: Backup settings to local
 :backup
-set "vscode_settings=%APPDATA%\Code\User\settings.json"
 set "backup_dir=%~dp0settings"
-set "backup_file=%backup_dir%\user-settings.json"
+set "user_settings=%APPDATA%\Code\User\settings.json"
+set "extensions_list=%USERPROFILE%\.vscode\extensions\extensions.json"
 
-if not exist "%vscode_settings%" (
-    echo Error: VSCode settings file not found
-    echo Possible reasons: VSCode not installed or never modified settings
-    pause
-    goto menu
-)
+echo Starting backup...
+echo -------------------
 
+:: 创建备份目录
 if not exist "%backup_dir%" (
     mkdir "%backup_dir%"
-    echo Backup directory created: %backup_dir%
+    echo Created backup directory: %backup_dir%
 )
 
-copy /Y "%vscode_settings%" "%backup_file%" > nul
-echo Backup successful!
-echo [Source]  %vscode_settings%
-echo [Target]  %backup_file%
+:: 备份用户设置
+if exist "%user_settings%" (
+    copy /Y "%user_settings%" "%backup_dir%\user-settings.json" >nul
+    echo [Success] Settings backed up to:
+    echo   %backup_dir%\user-settings.json
+) else (
+    echo [Warning] Settings file not found:
+    echo   %user_settings%
+)
+
+:: 备份扩展列表
+if exist "%extensions_list%" (
+    copy /Y "%extensions_list%" "%backup_dir%\user-extensions.json" >nul
+    echo [Success] Extensions list backed up to:
+    echo   %backup_dir%\user-extensions.json
+) else (
+    echo [Warning] Extensions file not found:
+    echo   %extensions_list%
+)
+
+echo Backup completed
 pause
 goto menu
 
