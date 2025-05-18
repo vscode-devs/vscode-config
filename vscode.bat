@@ -319,30 +319,50 @@ goto menu
 :: -------------------------------------------------
 :generate_manifest
 setlocal
-set "input_file=%~dp0settings\user-extensions.json"
-set "output_file=%~dp0extensions-manifest.yaml"
-
 echo Generating extension manifest...
 echo -------------------------------
 
-if not exist "%input_file%" (
+set "file_map[0].input=%~dp0settings\user-extensions.json"
+set "file_map[0].output=%~dp0settings\user-extensions.yaml"
+set "file_map[1].input=%~dp0settings\ssh-remote-extensions.json"
+set "file_map[1].output=%~dp0settings\ssh-remote-extensions.yaml"
+
+if not exist "%file_map[0].input%" (
     echo Error: Extensions file not found
     echo Run Backup first to create user-extensions.json
     pause
     endlocal
     goto menu
 )
+echo file_map[0].input=%file_map[0].input%
+powershell -Command "$json=Get-Content -LiteralPath '%file_map[0].input%' -Raw | ConvertFrom-Json; $output=@(); foreach($ext in $json){ $id=$ext.identifier.id; $ver=$ext.version; $parts=$id -split '\.'; $publisher=$parts[0]; $name=$parts[1..($parts.Count-1)] -join '.'; $vsixUrl='https://marketplace.visualstudio.com/_apis/public/gallery/publishers/'+$publisher.ToLower()+'/vsextensions/'+$name.ToLower()+'/'+$ver+'/vspackage'; $output+='' + $name + ':'; $output+='  publisher: ' + $publisher; $output+='  extension: ' + $name; $output+='  version: ' + $ver; $output+='  vsix-url: ' + $vsixUrl; $output+=''; } $output | Out-File -LiteralPath '%file_map[0].output%' -Encoding UTF8;"
 
-echo input_file=%input_file%
-powershell -Command "$json=Get-Content -LiteralPath '%input_file%' -Raw | ConvertFrom-Json; $output=@(); foreach($ext in $json){ $id=$ext.identifier.id; $ver=$ext.version; $parts=$id -split '\.'; $publisher=$parts[0]; $name=$parts[1..($parts.Count-1)] -join '.'; $vsixUrl='https://marketplace.visualstudio.com/_apis/public/gallery/publishers/'+$publisher.ToLower()+'/vsextensions/'+$name.ToLower()+'/'+$ver+'/vspackage'; $output+='' + $name + ':'; $output+='  publisher: ' + $publisher; $output+='  extension: ' + $name; $output+='  version: ' + $ver; $output+='  vsix-url: ' + $vsixUrl; $output+=''; } $output | Out-File -LiteralPath '%output_file%' -Encoding UTF8;"
-
-if exist "%output_file%" (
+if exist "%file_map[0].output%" (
     echo Manifest generated successfully:
-    echo   %output_file%
-    type "%output_file%"
+    echo   %file_map[0].output%
+    type "%file_map[0].output%"
 ) else (
     echo Failed to generate manifest
 )
+
+if not exist "%file_map[1].input%" (
+    echo Error: Extensions file not found
+    echo Run Backup first to create user-extensions.json
+    pause
+    endlocal
+    goto menu
+)
+echo file_map[1].input=%file_map[1].input%
+powershell -Command "$json=Get-Content -LiteralPath '%file_map[1].input%' -Raw | ConvertFrom-Json; $output=@(); foreach($ext in $json){ $id=$ext.identifier.id; $ver=$ext.version; $parts=$id -split '\.'; $publisher=$parts[0]; $name=$parts[1..($parts.Count-1)] -join '.'; $vsixUrl='https://marketplace.visualstudio.com/_apis/public/gallery/publishers/'+$publisher.ToLower()+'/vsextensions/'+$name.ToLower()+'/'+$ver+'/vspackage'; $output+='' + $name + ':'; $output+='  publisher: ' + $publisher; $output+='  extension: ' + $name; $output+='  version: ' + $ver; $output+='  vsix-url: ' + $vsixUrl; $output+=''; } $output | Out-File -LiteralPath '%file_map[1].output%' -Encoding UTF8;"
+
+if exist "%file_map[1].output%" (
+    echo Manifest generated successfully:
+    echo   %file_map[1].output%
+    type "%file_map[1].output%"
+) else (
+    echo Failed to generate manifest
+)
+
 pause
 endlocal
 goto menu

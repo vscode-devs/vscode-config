@@ -1,0 +1,6 @@
+﻿vscode-clangd:
+  publisher: llvm-vs-code-extensions
+  extension: vscode-clangd
+  version: 0.1.33
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/llvm-vs-code-extensions/vsextensions/vscode-clangd/0.1.33/vspackage
+
