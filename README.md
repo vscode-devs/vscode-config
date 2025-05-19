@@ -852,6 +852,7 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 ```json
 {
+    // llvm-vs-code-extensions.vscode-clangd
     "clangd.arguments": [
 		"--log=verbose",
 		"--clang-tidy",
@@ -925,26 +926,79 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 <img src="README/img/image-20250519075633817.png" alt="image-20250519075633817" />
 
+但是呢，新版本可能会有风险，例如：
+
+<img src="README/img/image-20250519230908897.png" alt="image-20250519230908897" />
+
+所以我后面其实用的是ubuntu自带的那个版本。我是ubuntu20.04，我看用这个版本也可以：[Release LLVM 15.0.0 · llvm/llvm-project](https://github.com/llvm/llvm-project/releases/tag/llvmorg-15.0.0)
+
+<img src="README/img/image-20250519231847994.png" alt="image-20250519231847994" />
+
 #### <font size=3>5.2.3 插件配置</font>
 
-- settings配置
+##### <font size=3>5.2.3.1 settings配置</font>
 
 ```json
-"clang-format.executable": "/home/sumu/2software/LLVM-20.1.5-Linux-X64/bin/clang-format",
-	"clang-format.assumeFilename": "/home/sumu/2software/LLVM-20.1.5-Linux-X64/config/.clang-format",
+{
+    // xaver.clang-format
+	//"clang-format.executable": "/home/sumu/2software/LLVM-20.1.5-Linux-X64/bin/clang-format", // 配置clang-format可执行程序路径
+	"clang-format.executable": "clang-format",
+	"clang-format.assumeFilename": "/home/sumu/2software/LLVM-20.1.5-Linux-X64/config/.clang-format", // 配置clang-format配置文件路径
+	"clang-format.style": "file", // clang-format风格。（style=value， value可以是file， LLVM，谷歌，Chromium, Mozilla， WebKit或json configure）
 	"[c]": {
-		"editor.defaultFormatter": "xaver.clang-format"
+		"editor.defaultFormatter": "xaver.clang-format" // C文件默认格式化程序
 	},
 	"[cpp]": {
-		"editor.defaultFormatter": "xaver.clang-format"
+		"editor.defaultFormatter": "xaver.clang-format" // C++默认格式化程序
 	},
+}
 ```
 
-- 格式化风格文件配置
+##### <font size=3>5.2.3.2 使用指定的格式化文件</font>
 
-[Clang-Format Style Options — Clang 21.0.0git documentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
+当内置的格式化风格不能满足需求时，可以使用 .clang-format 文件自定义格式。生成 .clang-format 文件的命令如下：
 
-[Clang-Format 样式选项 — Clang 20.0.0git 文档 - Clang 编译器](https://clang.llvm.net.cn/docs/ClangFormatStyleOptions.html)
+```shell
+clang-format -style=google -dump-config > .clang-format
+```
+
+生成的 .clang-format 文件可以根据需要进行修改，然后把它放在代码文件的同一目录下，使用时指定 clang-format.style=file
+
+```json
+{
+    // 指定风格化文件路径
+    "clang-format.assumeFilename": "/home/sumu/xxx/.clang-format", 
+    // clang-format风格，当不使用内置时，这里配置成file
+	"clang-format.style": "file",   
+}
+```
+
+其实也可以不指定clang-format.assumeFilename，这样我们将.clang-format文件放置在工程目录根目录下也是可以的。假设项目目录结构如下：
+
+```shell
+project-root/
+├── main.cpp
+├── utils.cpp
+├── utils.h
+└── .clang-format
+```
+
+在 .clang-format 文件中可以添加以下内容：
+
+```yaml
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 80
+SortIncludes: true
+```
+
+然后右键格式化文档即可。
+
+##### <font size=3>5.2.3.3 我的常用配置</font>
+
+>[Clang-Format Style Options — Clang 21.0.0git documentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
+>
+>[Clang-Format 样式选项 — Clang 20.0.0git 文档 - Clang 编译器](https://clang.llvm.net.cn/docs/ClangFormatStyleOptions.html)
 
 ```yaml
 # .clang-format

@@ -1,4 +1,5 @@
 {
+	// llvm-vs-code-extensions.vscode-clangd
     "clangd.arguments": [
 		"--log=verbose",
 		"--clang-tidy",
@@ -19,4 +20,18 @@
 		"--pretty",
 	],
 	"clangd.path": "/home/sumu/2software/clangd_19.1.2/bin/clangd",
+	
+	// xaver.clang-format
+	"clang-format.executable": "/home/sumu/2software/clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4/bin/clang-format", // 配置clang-format可执行程序路径
+	//"clang-format.executable": "clang-format",
+	"clang-format.assumeFilename": "/home/sumu/2software/clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4/config/.clang-format", // 配置clang-format配置文件路径
+	"clang-format.style": "file", // clang-format风格。(style=value， value可以是file | LLVM | Google | Chromium | ...)
+	"[c]": {
+		"editor.defaultFormatter": "xaver.clang-format" // C文件默认格式化程序
+	},
+	"[cpp]": {
+		"editor.defaultFormatter": "xaver.clang-format" // C++默认格式化程序
+	},
+	"editor.formatOnSave": false,   // 配置文件在保存时自动格式化代码风格
+	"editor.formatOnSaveMode": "modificationsIfAvailable", // 配置自动格式化时，将尝试只对修改进行格式化(需要源代码管理)。如果无法使用源代码管理，则将格式化整个文件。
 }
