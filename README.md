@@ -1,6 +1,6 @@
 # <font size=3>一、vscode简介</font>
 
-## <font size=3>1. 官网</font>
+## <font size=3>1. 官网在哪里？</font>
 
 [Visual Studio Code - Code Editing. Redefined](https://code.visualstudio.com/):
 
@@ -15,7 +15,7 @@ https://update.code.visualstudio.com/{version}/win32-x64/stable
 https://update.code.visualstudio.com/{version}/win32-x64-user/stable
 ```
 
-## <font size=3>2. 版本</font>
+## <font size=3>2. 这个笔记基于什么版本？</font>
 
 目前用的是这个版本：[VSCodeSetup-x64-1.100.2.exe(System Installer)](https://vscode.download.prss.microsoft.com/dbazure/download/stable/848b80aeb52026648a8ff9f7c45a9b0a80641e2e/VSCodeSetup-x64-1.100.2.exe)
 
@@ -35,7 +35,17 @@ V8: 13.2.152.41-electron.0
 OS: Windows_NT x64 10.0.19044
 ```
 
-## <font size=3>3. 相关目录</font>
+> Tips：版本限制？
+>
+> Microsoft ended support and is no longer providing security updates for [Windows 7](https://learn.microsoft.com/lifecycle/products/windows-7), [Windows 8, and Windows 8.1](https://learn.microsoft.com/en-us/lifecycle/announcements/windows-8-1-end-support-january-2023). VS Code desktop versions starting with 1.71 (August 2022) no longer run on Windows 7 and starting with 1.80 (June 2023) will no longer run on Windows 8 and 8.1. You will need to upgrade to a newer Windows version to use later versions of VS Code.
+>
+> VS Code will no longer provide product updates or security fixes on old Windows versions. VS Code [version 1.70.3](https://code.visualstudio.com/updates/v1_70) is the last available release for Windows 7 users and version 1.79 will be the last available release for Windows 8 and 8.1 users. You can learn more about upgrading your Windows version at [support.microsoft.com](https://support.microsoft.com/windows/windows-7-support-ended-on-january-14-2020-b75d4580-2cc7-895a-2c9c-1466d9a53962).
+>
+> Additionally, 32-bit OEM support has been dropped with Windows 10, version 2004. The last stable VS Code version to support Windows 32-bit is 1.83 (September 2023). You will need to update to the 64-bit release.
+>
+> ​								——[Visual Studio Code FAQ](https://code.visualstudio.com/Docs/supporting/FAQ#_can-i-run-vs-code-on-older-windows-versions)
+
+## <font size=3>3. 记录一下相关目录？</font>
 
 主要是是在windows下开发，所以这里主要关注一下windows中vscode相关的目录
 
@@ -57,7 +67,7 @@ C:\Users\<user_name>\.vscode\extensions
 
 > Tops：卸载的时候目录中的文件不会被删除。
 
-# <font size=3>二、插件安装</font>
+# <font size=3>二、怎么安装插件？</font>
 
 ## <font size=3>1. 插件安装位置</font>
 
@@ -88,6 +98,8 @@ C:\Users\<user_name>\.vscode\extensions
 <img src="README/img/image-20250516104355099.png" alt="image-20250516104355099"  />
 
 ### <font size=3>2.3 vsix安装</font>
+
+> Tips：vscode的插件好像可以跨平台，我下载的vsix，既可以在windows下使用，也能上传到linux服务器使用。
 
 <img src="README/img/image-20250516104626672.png" alt="image-20250516104626672"  />
 
@@ -165,137 +177,141 @@ https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/zhuangtongfa/vsextensions/Material-theme/3.19.0/vspackage
 ```
 
+# <font size=3>三、有哪些常用插件？</font>
 
+## <font size=3>1. 主题相关插件</font>
 
-# <font size=3>三、常用插件</font>
+### <font size=3>1.1 One Dark Pro</font>
 
-## <font size=3>1. One Dark Pro</font>
+[Binaryify/OneDark-Pro: Atom's iconic One Dark theme for Visual Studio Code](https://github.com/Binaryify/OneDark-Pro)
 
-### <font size=3>1.1 插件安装</font>
+#### <font size=3>1.1.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: One Dark Pro
-ID: zhuangtongfa.material-theme
-说明: Atom's iconic One Dark theme for Visual Studio Code
-版本: 3.19.0
-发布者: binaryify
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=zhuangtongfa.Material-theme
-
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/zhuangtongfa/vsextensions/material-theme/3.19.0/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/zhuangtongfa/vsextensions/material-theme/3.19.0/vspackage
 
-### <font size=3>1.2 插件配置</font>
+#### <font size=3>1.1.2 插件配置</font>
 
-## <font size=3>2. Material Icon Theme</font>
-
-### <font size=3>2.1 插件安装</font>
-
-```shell
-# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Material Icon Theme
-ID: PKief.material-icon-theme
-说明: Material Design Icons for Visual Studio Code
-版本: 5.22.0
-发布者: Philipp Kief
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme
-
-https://marketplace.visualstudio.com/_apis/public/gallery/publishers/PKief/vsextensions/material-icon-theme/5.22.0/vspackage
+```json
+{
+    "workbench.colorTheme": "One Dark Pro Darker", // 界面主题
+}
 ```
 
-VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/PKief/vsextensions/material-icon-theme/5.22.0/vspackage
+### <font size=3>1.2 Material Icon Theme</font>
 
-### <font size=3>2.2 插件配置</font>
+[material-extensions/vscode-material-icon-theme: Material Design icons for VS Code](https://github.com/material-extensions/vscode-material-icon-theme)
 
-## <font size=3>3. Hex Editor</font>
+#### <font size=3>1.2.1 VSIX下载</font>
 
-### <font size=3>3.1 插件安装</font>
+```shell
+# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/PKief/vsextensions/material-icon-theme/5.23.0/vspackage
+```
+
+VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/PKief/vsextensions/material-icon-theme/5.23.0/vspackage
+
+#### <font size=3>1.2.2 插件配置</font>
+
+```json
+{
+    "workbench.iconTheme": "material-icon-theme",  // 图标主题
+}
+```
+
+### <font size=3>1.3 Chinese (Simplified)</font>
+
+vscode是支持中文的，有中文（简体）语言包为 VS Code 提供本地化界面。
+
+> Tips：虽然中文很好，但是，对有些插件不是很友好，比如后面经常要用的ssh remote，在内网，也就是服务器和windows都无法联网的时候，有这个中文界面的情况下，就是会花费好久才能连接到服务器，也不知道是不是因为没网？还是因为中文化浪费时间，具体原因没有深究。这种情况下，卸载它，然后重新连，嘎嘎快！！！也许是我使用方式不对吧，但是个人感觉，这个软件配置并不复杂，所以有没有中文语言包都差不多。
+
+#### <font size=3>1.3.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
 
-名称: Hex Editor
-ID: ms-vscode.hexeditor
-说明: Allows viewing and editing files in a hex editor
-版本: 1.11.1
-发布者: Microsoft
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ms-vscode.hexeditor
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MS-CEINTL/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
+```
 
+VSIX下载链接：
+
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MS-CEINTL/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
+
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-ceintl/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
+
+#### <font size=3>1.3.2 插件配置</font>
+
+安装完后，右下角会有弹窗让选择语言类型。
+
+### <font size=3>1.4 background-cover</font>
+
+这个是vscode背景插件，可以设置背景图片，还有一个background的插件，功能好像更强大，但这个background-cover插件安装完好像就几百K，而且基本功能够用了。
+
+#### <font size=3>1.3.1 VSIX下载</font>
+
+```shell
+# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
+
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/manasxx/vsextensions/background-cover/2.7.0/vspackage
+```
+
+VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/manasxx/vsextensions/background-cover/2.7.0/vspackage
+
+#### <font size=3>1.3.2 插件配置</font>
+
+```json
+{
+    // manasxx.background-cover
+	"backgroundCover.imagePath": "d:\\devSoftware\\vscode-dev\\sumu\\sumu002.jpg", 
+	"backgroundCover.opacity": 0.13, // 不透明度
+	"backgroundCover.blur": 3,       // 模糊度
+}
+```
+
+## <font size=3>2. 文件查看</font>
+
+### <font size=3>2.1 Hex Editor</font>
+
+#### <font size=3>2.1.1 VSIX</font>
+
+```shell
+# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/hexeditor/1.11.1/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/hexeditor/1.11.1/vspackage
 
-### <font size=3>3.2 插件配置</font>
+#### <font size=3>2.1.2 插件配置</font>
 
-## <font size=3>4. Chinese (Simplified)</font>
+暂无。
 
-### <font size=3>4.1 插件安装</font>
-
-```shell
-# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Chinese (Simplified) (简体中文) Language Pack for Visual Studio Code
-ID: MS-CEINTL.vscode-language-pack-zh-hans
-说明: Language pack extension for Chinese (Simplified)
-版本: 1.100.2025051409
-发布者: Microsoft
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=MS-# CEINTL.vscode-language-pack-zh-hans
-
-https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MS-CEINTL/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
-```
-
-VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/MS-CEINTL/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
-
-https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-ceintl/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
-
-
-
-### <font size=3>4.2 插件配置</font>
-
-## <font size=3>5. Remote - SSH</font>
+## <font size=3>3. Remote - SSH</font>
 
 [Remote Development using SSH](https://code.visualstudio.com/docs/remote/ssh)：
 
 <img src="README/img/architecture-ssh.png" alt="SSH Architecture"  />
 
-### <font size=3>5.1 插件安装</font>
+### <font size=3>3.1 VSIX下载</font>
 
 这里在有网的环境下，安装了 Remote - SSH 插件后，会自动安装另外两个插件，没网的话，可以手动下载VSIX文件后安装。
 
-#### <font size=3>5.1.1 Remote - SSH</font>
+#### <font size=3>3.1.1 Remote - SSH</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Remote - SSH
-ID: ms-vscode-remote.remote-ssh
-说明: Open any folder on a remote machine using SSH and take advantage of VS Code's full feature set.
-版本: 0.120.0
-发布者: Microsoft
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh
-
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/remote-ssh/0.120.0/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/remote-ssh/0.120.0/vspackage
 
-#### <font size=3>5.1.2 Remote Explorer</font>
+#### <font size=3>3.1.2 Remote Explorer</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Remote Explorer
-ID: ms-vscode.remote-explorer
-说明: View remote machines for SSH and Tunnels.
-版本: 0.5.0
-发布者: Microsoft
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ms-vscode.remote-explorer
-
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/remote-explorer/0.5.0/vspackage
 ```
 
@@ -305,18 +321,10 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 <img src="README/img/image-20250516210242321.png" alt="image-20250516210242321"  />
 
-#### <font size=3>5.1.3 Remote - SSH: Editing Configuration Files</font>
+#### <font size=3>3.1.3 Remote - SSH: Editing Configuration Files</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Remote - SSH: Editing Configuration Files
-ID: ms-vscode-remote.remote-ssh-edit
-说明: Edit SSH configuration files
-版本: 0.87.0
-发布者: Microsoft
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh-edit
-
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/remote-ssh-edit/0.87.0/vspackage
 ```
 
@@ -324,7 +332,7 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 这个插件安装好像是个语法高亮的插件，反正安装完，编辑ssh配置文件的时候就有语法高亮了。
 
-### <font size=3>5.2 Visual Studio Code Server</font>
+### <font size=3>3.2 Visual Studio Code Server</font>
 
 [Visual Studio Code Server](https://code.visualstudio.com/docs/remote/vscode-server)：
 
@@ -334,7 +342,7 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 > 参考资料：[vscode 远程 linux(包括离线vscode-server安装，免密登录方法)_vscode-server-linux-CSDN博客](https://blog.csdn.net/qq_43623902/article/details/136258880)
 
-#### <font size=3>5.2.1 获取vscode的提交记录</font>
+#### <font size=3>3.2.1 获取vscode的提交记录</font>
 
 如果是在有网的环境下，我们可以直接在vscode中向linux服务器端安装Visual Studio Code Server，但是对于没有网的环境，我们可以这样做，点开vscode【帮助】&rarr;【关于】可以得到vscode的版本信息：
 
@@ -348,9 +356,11 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 日期: 2025-05-14T21:47:40.416Z
 ```
 
-#### <font size=3>5.2.2 下载vscode-server-linux</font>
+#### <font size=3>3.2.2 下载vscode-server-linux</font>
 
-从1.86.1版本开始，vscode-server在linux中的目录结构就发生了变化了。从1.86版本开始，glibc库版本需要在2.28以上（[January 2024 (version 1.86)](https://code.visualstudio.com/updates/v1_86#_linux-minimum-requirements-update)）后面还会提到这个事情，所以从这个版本之后服务器中c库版本太低的话就不能使用ssh remote插件了。
+从1.86.1版本开始，vscode-server在linux中的目录结构就发生了变化了，因为它们默认安装的Remote - SSH都是不一样的，vscode server的目录结构是这个插件版本决定的，我自己下了[VSCodeUserSetup-x64-1.86.1](https://update.code.visualstudio.com/1.86.1/win32-x64-user/stable)(这个版本默认装的Remote - SSH版本为 0.108.0) 和 [VSCodeUserSetup-x64-1.85.2](https://update.code.visualstudio.com/1.85.2/win32-x64-user/stable)（这个版本默认装的Remote - SSH版本为 0.107.1）试了一下发现是从这个0.107.1这个还是下的旧版本，0.108.0就是新版本了。
+
+而且从1.86版本开始，glibc库版本需要在2.28以上（[January 2024 (version 1.86)](https://code.visualstudio.com/updates/v1_86#_linux-minimum-requirements-update)）后面还会提到这个事情，所以从这个版本之后服务器中c库版本太低的话就不能使用ssh remote插件了。
 
 - **旧版离线包**
 
@@ -431,9 +441,9 @@ https://vscode.download.prss.microsoft.com/dbazure/download/stable/848b80aeb5202
 
 <img src="README/img/image-20250516231129415.png" alt="image-20250516231129415" />
 
-#### <font size=3>5.2.3 服务器端安装</font>
+#### <font size=3>3.2.3 服务器端安装</font>
 
-##### <font size=3>5.2.3.1 旧版离线包安装</font>
+##### <font size=3>3.2.3.1 旧版离线包安装</font>
 
 - 创建对应的目录
 
@@ -484,7 +494,7 @@ tar -zxvf vscode-server-linux-x64.tar.gz --strip-components=1 -C ~/.vscode-serve
 4 directories, 4 files
 ```
 
-##### <font size=3>5.2.3.2 新版离线包安装</font>
+##### <font size=3>3.2.3.2 新版离线包安装</font>
 
 - 创建对应的目录
 
@@ -518,9 +528,9 @@ mv code  ~/.vscode-server/code-848b80aeb52026648a8ff9f7c45a9b0a80641e2e
 
 <img src="README/img/image-20250516232725186.png" alt="image-20250516232725186" />
 
-### <font size=3>5.3 连接远程服务器</font>
+### <font size=3>3.3 连接远程服务器</font>
 
-#### <font size=3>5.3.1 服务器端SSH</font>
+#### <font size=3>3.3.1 服务器端SSH</font>
 
 首先服务器端需要安装好openssh-server：
 
@@ -531,13 +541,13 @@ mv code  ~/.vscode-server/code-848b80aeb52026648a8ff9f7c45a9b0a80641e2e
 
 <img src="README/img/image-20250516224915958.png" alt="image-20250516224915958" />
 
-#### <font size=3>5.3.2 windows可以ping通服务器</font>
+#### <font size=3>3.3.2 windows可以ping通服务器</font>
 
 ```shell
 ping xxx.xxx.xxx.xxx
 ```
 
-#### <font size=3>5.3.3 连接远程服务器</font>
+#### <font size=3>3.3.3 连接远程服务器</font>
 
 - （1）新建远程连接
 
@@ -566,9 +576,64 @@ ssh <user>@<hostname>:[port]
 
 然后我们就可以开始使用ssh remote工具进行远程开发了。
 
-### <font size=3>5.4 GLIBC问题</font>
+#### <font size=3>3.3.4 ssh remote日志分析</font>
 
-#### <font size=3>5.4.1 报错信息</font>
+- 以[VSCodeUserSetup-x64-1.86.1](https://update.code.visualstudio.com/1.86.1/win32-x64-user/stable)为例，这个版本装的Remote - SSH版本为 0.108.0
+
+具体的过程其实可以看一下vscode的输出窗口：
+
+<img src="README/img/image-20250519201515235.png" alt="image-20250519201515235"  />
+
+我们注意看这里这一行：
+
+```shell
+/home/sumu/.vscode-server/code-31c37ee8f63491495ac49e433b8544550fbae4533
+```
+
+这里的31c37ee8f63491495ac49e433b8544550fbae4533其实就是vscode的提交ID了，这个其实就是前面我们离线下载的vscode_cli_alpine_x64_cli.tar.gz压缩包，再往后看，可以看到这么一段：
+
+<img src="README/img/image-20250519201806839.png" alt="image-20250519201806839" />
+
+有没有很熟悉？就是前面下载的vscode-server-linux-x64.tar.gz离线包要解压的位置。
+
+- [VSCodeUserSetup-x64-1.85.2](https://update.code.visualstudio.com/1.85.2/win32-x64-user/stable)为例，这个版本装的Remote - SSH版本为 0.107.1
+
+<img src="README/img/image-20250519202622514.png" alt="image-20250519202622514" />
+
+其实从这里可以看到，这个就是老版的离线包了。
+
+- [VSCodeUserSetup-x64-1.100.2](https://update.code.visualstudio.com/1.100.2/win32-x64-user/stable) + Remote - SSH版本为 0.107.1？
+
+<img src="README/img/image-20250519203647282.png" alt="image-20250519203647282" />
+
+会发现，其实这个目录结构主要是Remote - SSH插件版本决定的，我没有找到这个插件的发布说明，在网上找到有一篇文章：
+
+```shell
+问题出在vscode Remote SSH插件（0.106.1版本）。在该版本的插件代码中，开发者们设计了新的ssh连接实现方法（发生改变的还有.vscode-server的目录结构），但显然他们没有排除完bug。所以，在0.106.2版本中他们改回了原来的方法。对于vscode版本为1.82.0且Remote SSH插件版本为0.106.2的设备，配置vscode-server的方式暂且照旧。
+```
+
+这一段是这篇文章中的：[解决Visual Studio Code 更新后一直卡在下载vscode-server问题的方法 - 知乎](https://zhuanlan.zhihu.com/p/655289233)
+
+#### <font size=3>3.3.5 Remote SSH连接流程</font>
+
+这里大概了解下连接的流程：
+
+```shell
+# 1. 每个版本的vscode都对应一个commit id，当远程连接到服务器时，本地设备上vscode的commit id会被传上去；
+# 2. 如果在.vscode-server/bin/目录下有与传上去的commit id同名的文件夹（旧方法），或者在.vscode-server/目录下有code-${commit id}文件，同时有.vscode-server/cli/servers/Stable-${commit id}/server文件夹（新方法），服务器会直接完成远程链接的相关工作；
+# 3. 如果不符合第2步中提到的情况，在完成远程连接的相关工作前，服务器就会试图从vscode官方提供的网站下载对应的文件并把它们放到相应的目录下；
+# 4. vscode每次更新版本时就会换commit id，所以每次更新后服务器都会执行第3步中提到的操作；
+```
+
+> 为什么vscode有时不能完成上述工作以至于需要我们自行完成相关操作?
+>
+> （1）自2023年的某月始，出于某些未知原因，vscode官方提供的网站https://update.code.visualstudio.com无法稳定访问。因此，我们需要把该网址换成国内的cdn https://vscode.download.prss.microsoft.com
+>
+> （2）我们自己开发的时候可能会在内网，那么就意味着我们无法连接外网实现自动下载。
+
+### <font size=3>3.4 GLIBC问题</font>
+
+#### <font size=3>3.4.1 报错信息</font>
 
 上面即便是下载了新版本的离线包，有可能还是会出问题，如：
 
@@ -596,9 +661,9 @@ ssh <user>@<hostname>:[port]
 >
 >​																													——[March 2025 (version 1.99)](https://code.visualstudio.com/updates/v1_99#_remote-development)
 
-可以看到，结合上面的1.86的发布信息，这里大概就是说1.99版本开始就停止支持老版本的库吧，反正大概这个意思，也就是说无法升级库的话，最新应该是可以用到1.99的上一个版本，也就是1.98.2版本了。
+可以看到，结合上面的1.86的发布信息，这里大概就是说1.99版本开始就停止支持老版本的库吧，反正大概这个意思，也就是说无法升级库的话，理论上最新应该是可以用到1.99的上一个版本？这个我没有去验证了，不能用就回退或者更新c库。
 
-#### <font size=3>5.4.2 GLIBC库版本</font>
+#### <font size=3>3.4.2 GLIBC库版本</font>
 
 可以看一下服务器中libc库的版本：
 
@@ -611,160 +676,153 @@ $ /lib/x86_64-linux-gnu/libc.so.6         # 直接执行这个动态库
 
 如果服务器的libc库可以升级，那就升级库就行了，要是不能升级，就换[February 2025 (version 1.98)](https://code.visualstudio.com/updates/v1_98)版本，可以在这里下载：[VSCodeUserSetup-x64-1.98.2](https://vscode.download.prss.microsoft.com/dbazure/download/stable/ddc367ed5c8936efe395cffeec279b04ffd7db78/VSCodeUserSetup-x64-1.98.2.exe)
 
-## <font size=3>6. 语法高亮工具</font>
+## <font size=3>4. 语法高亮工具</font>
 
-### <font size=3>6.1 Makefile Tools</font>
+### <font size=3>4.1 Makefile Tools</font>
 
-#### <font size=3>6.1.1 插件安装</font>
+#### <font size=3>6.1.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Makefile Tools
-ID: ms-vscode.makefile-tools
-说明: Provide makefile support in VS Code: C/C++ IntelliSense, build, debug/run.
-版本: 0.12.17
-发布者: Microsoft
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/makefile-tools/0.12.17/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/makefile-tools/0.12.17/vspackage
 
-#### <font size=3>6.1.2 插件配置</font>
+#### <font size=3>4.1.2 插件配置</font>
 
-### <font size=3>6.2 DeviceTree</font>
+### <font size=3>4.2 DeviceTree</font>
 
-#### <font size=3>6.2.1 插件安装</font>
+#### <font size=3>4.2.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: DeviceTree
-ID: plorefice.devicetree
-说明: DeviceTree Language Support for Visual Studio Code
-版本: 0.1.1
-发布者: Pietro Lorefice
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=plorefice.devicetree
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/plorefice/vsextensions/devicetree/0.1.1/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/plorefice/vsextensions/devicetree/0.1.1/vspackage
 
-#### <font size=3>6.2.2 插件配置</font>
+#### <font size=3>4.2.2 插件配置</font>
 
-### <font size=3>6.3 stylus</font>
+### <font size=3>4.3 stylus</font>
 
-#### <font size=3>6.3.1 插件安装</font>
+#### <font size=3>4.3.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: stylus
-ID: sysoev.language-stylus
-说明: stylus language support
-版本: 1.16.0
-发布者: sysoev
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=sysoev.language-stylus
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/sysoev/vsextensions/language-stylus/1.16.0/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/sysoev/vsextensions/language-stylus/1.16.0/vspackage
 
-#### <font size=3>6.3.2 插件配置</font>
+#### <font size=3>4.3.2 插件配置</font>
 
-### <font size=3>6.4 GNU Linker Map files</font>
+### <font size=3>4.4 GNU Linker Map files</font>
 
-#### <font size=3>6.4.1 插件安装</font>
+#### <font size=3>4.4.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: GNU Linker Map files
-ID: trond-snekvik.gnu-mapfiles
-说明: Syntax highlighting and symbol listing for GNU linker .map files
-版本: 1.1.0
-发布者: Trond Snekvik
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=trond-snekvik.gnu-mapfiles
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/trond-snekvik/vsextensions/gnu-mapfiles/1.1.0/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/trond-snekvik/vsextensions/gnu-mapfiles/1.1.0/vspackage
 
-#### <font size=3>6.4.2 插件配置</font>
+#### <font size=3>4.4.2 插件配置</font>
 
-### <font size=3>6.5 LinkerScript</font>
+### <font size=3>4.5 LinkerScript</font>
 
-#### <font size=3>6.5.1 插件安装</font>
+#### <font size=3>4.5.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: LinkerScript
-ID: ZixuanWang.linkerscript
-说明: Language support for GNU linker script
-版本: 1.0.4
-发布者: Zixuan Wang
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ZixuanWang.linkerscript
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ZixuanWang/vsextensions/linkerscript/1.0.4/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ZixuanWang/vsextensions/linkerscript/1.0.4/vspackage
 
-#### <font size=3>6.5.2 插件配置</font>
+#### <font size=3>4.5.2 插件配置</font>
 
-### <font size=3>6.6 Arm Assembly</font>
+### <font size=3>4.6 Arm Assembly</font>
 
-#### <font size=3>6.6.1 插件安装</font>
+#### <font size=3>4.6.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Arm Assembly
-ID: dan-c-underwood.arm
-说明: Arm assembly syntax support for Visual Studio Code
-版本: 1.7.4
-发布者: dan-c-underwood
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=dan-c-underwood.arm
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/dan-c-underwood/vsextensions/arm/1.7.4/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/dan-c-underwood/vsextensions/arm/1.7.4/vspackage
 
-### <font size=3>6.7 Nunjucks</font>
+### <font size=3>4.7 Nunjucks</font>
 
-#### <font size=3>6.7.1 插件安装</font>
+#### <font size=3>4.7.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Nunjucks
-ID: ronnidc.nunjucks
-说明: A Nunjucks syntax definition + snippets
-版本: 0.3.1
-发布者: ronnidc
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=ronnidc.nunjucks
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ronnidc/vsextensions/nunjucks/0.3.1/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ronnidc/vsextensions/nunjucks/0.3.1/vspackage
 
-#### <font size=3>6.7.2 插件配置</font>
+#### <font size=3>4.7.2 插件配置</font>
 
-## <font size=3>8. C/C++开发</font>
+### <font size=3>4.8 highlight-words</font>
 
-### <font size=3>8.1 clangd</font>
+[rsbondi/highlight-words: vscode extension to highlight all occurrences of words or expression](https://github.com/rsbondi/highlight-words)
+
+#### <font size=3>4.8.1 VSIX下载</font>
+
+```shell
+# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
+
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/rsbondi/vsextensions/highlight-words/0.1.4/vspackage
+```
+
+VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/rsbondi/vsextensions/highlight-words/0.1.4/vspackage
+
+#### <font size=3>4.8.2 插件配置</font>
+
+```json
+{
+    "highlightwords.colors": [
+        { "light": "#b3d9ff", "dark": "cyan" },
+        { "light": "#e6ffb3", "dark": "pink" },
+        { "light": "#b3b3ff", "dark": "lightgreen" },
+        { "light": "#ffd9b3", "dark": "magenta" },
+        { "light": "#ffb3ff", "dark": "cornflowerblue" },
+        { "light": "#b3ffb3", "dark": "orange" },
+        { "light": "#ffff80", "dark": "green" },
+        { "light": "#d1e0e0", "dark": "red" }                                        
+        //...
+    ],
+    "highlightwords.box": {
+        "light": false,
+        "dark": true
+    },
+    "highlightwords.defaultMode": {
+        "default": 0
+    },
+    "highlightwords.showSidebar": {
+        "default": true
+    }
+}
+```
+
+## <font size=3>5. C/C++开发</font>
+
+### <font size=3>5.1 clangd</font>
 
 [What is clangd?](https://clangd.llvm.org/)
 
-#### <font size=3>8.1.1 插件安装</font>
+#### <font size=3>5.1.1 VSIX下载</font>
 
 ```shell
 vscode-clangd:
@@ -774,15 +832,17 @@ vscode-clangd:
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/llvm-vs-code-extensions/vsextensions/vscode-clangd/0.1.33/vspackage
 ```
 
-主要是装在服务器中。
+VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/llvm-vs-code-extensions/vsextensions/vscode-clangd/0.1.33/vspackage。
 
-#### <font size=3>8.1.2 clangd安装</font>
+> 主要是装在服务器中。
+
+#### <font size=3>5.1.2 clangd安装</font>
 
 我这里装的19.1.2：[Releases · clangd/clangd](https://github.com/clangd/clangd/releases/tag/19.1.2)
 
 <img src="README/img/image-20250519004642888.png" alt="image-20250519004642888" />
 
-#### <font size=3>8.1.3 插件配置</font>
+#### <font size=3>5.1.3 插件配置</font>
 
 打开远程配置文件：
 
@@ -819,7 +879,7 @@ vscode-clangd:
 
 "--compile-commands-dir"：对应后续 compile_commands.json 文件位置，上面是配置为工程目录。
 
-#### <font size=3>8.1.4 编译命令</font>
+#### <font size=3>5.1.4 编译命令</font>
 
 clangd的使用需要工程中存在 compile_commands.json 文件，怎么生成呢？可以用bear命令生成。
 
@@ -839,30 +899,23 @@ bear ./build.sh -p1 -n2
 
 生成之后，需要重启clangd服务（或重新打开远程），然后就可以用了。
 
-### <font size=3>8.2 Clang-Format</font>
+### <font size=3>5.2 Clang-Format</font>
 
 [LLVM 的 Clang C 语言家族前端 - Clang 编译器](https://clang.llvm.net.cn/)
 
 [Clang C Language Family Frontend for LLVM](https://clang.llvm.org/)
 
-#### <font size=3>8.2.1 插件安装</font>
+#### <font size=3>5.2.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: Clang-Format
-ID: xaver.clang-format
-说明: Use Clang-Format in Visual Studio Code
-版本: 1.9.0
-发布者: Xaver Hellauer
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=xaver.clang-format
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/xaver/vsextensions/clang-format/1.9.0/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/xaver/vsextensions/clang-format/1.9.0/vspackage
 
-#### <font size=3>8.2.2 clang-format</font>
+#### <font size=3>5.2.2 clang-format</font>
 
 好像是还需要装个clang-format的可执行程序，但是感觉装插件的时候自动装了？我是看我的ubuntu中直接有一个，但是版本比较老：
 
@@ -872,7 +925,7 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 <img src="README/img/image-20250519075633817.png" alt="image-20250519075633817" />
 
-#### <font size=3>8.2.3 插件配置</font>
+#### <font size=3>5.2.3 插件配置</font>
 
 - settings配置
 
@@ -928,30 +981,23 @@ NamespaceIndentation: All
 IndentWidth: 4
 ```
 
-## <font size=3>9. 自动生成注释</font>
+## <font size=3>6. 自动生成注释</font>
 
-### <font size=3>9.1 koroFileHeader</font>
+### <font size=3>6.1 koroFileHeader</font>
 
 这个插件是自动生成注释的，但是延迟会比较大，可配置项比较多。其实要不要都行。
 
-#### <font size=3>9.1.1 插件安装</font>
+#### <font size=3>6.1.1 VSIX下载</font>
 
 ```shell
 # https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
-
-名称: koroFileHeader
-ID: OBKoro1.korofileheader
-说明: 用于生成文件头部注释和函数注释的插件，支持所有主流语言,功能强大，灵活方便，文档齐全，食用简单！
-版本: 4.9.3
-发布者: OBKoro1
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=OBKoro1.korofileheader
 
 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/OBKoro1/vsextensions/korofileheader/4.9.3/vspackage
 ```
 
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/OBKoro1/vsextensions/korofileheader/4.9.3/vspackage
 
-#### <font size=3>9.1.2 插件配置</font>
+#### <font size=3>6.1.2 插件配置</font>
 
 [配置字段 · OBKoro1/koro1FileHeader Wiki](https://github.com/OBKoro1/koro1FileHeader/wiki/配置字段)：
 
@@ -1081,29 +1127,40 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 }
 ```
 
-## <font size=3>10. Shell function outline</font>
+## <font size=3>7. 脚本开发</font>
+
+### <font size=3>7.1 shell man</font>
+
+这个可以用于shell脚本的自动补全。
+
+#### <font size=3>7.1.1 VSIX下载</font>
 
 ```shell
-名称: Shell function outline
-ID: jannek-aalto.shell-function-outline
-说明: Provides basic outline capability for shell script functions. For ksh, bash etc.
-版本: 1.2.2
-发布者: jannek-aalto
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=jannek-aalto.shell-function-outline
+# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
+
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/remisa/vsextensions/shellman/5.7.0/vspackage
 ```
 
+VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/remisa/vsextensions/shellman/5.7.0/vspackage
 
+#### <font size=3>7.1.2 插件配置</font>
 
-## <font size=3>11. background-cover</font>
+### <font size=3>7.2 Bash IDE</font>
+
+这个可以识别shell脚本中的函数，可以在右侧大纲视图显示，另外也可以进行一些变量的跳转。
+
+#### <font size=3>7.2.1 VSIX下载</font>
 
 ```shell
-名称: background-cover
-ID: manasxx.background-cover
-说明: Add a picture you like to cover the entire vscode background. / 添加你喜欢的图片覆盖整个vscode背景
-版本: 2.7.0
-发布者: 满猪小星小猪满
-VS Marketplace 链接: https://marketplace.visualstudio.com/items?itemName=manasxx.background-cover
+# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
+
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/mads-hartmann/vsextensions/bash-ide-vscode/1.43.0/vspackage
+
 ```
+
+VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/mads-hartmann/vsextensions/bash-ide-vscode/1.43.0/vspackage
+
+#### <font size=3>7.2.2 插件配置</font>
 
 # <font size=3>四、配置</font>
 

@@ -1,28 +1,4 @@
-﻿vscode-language-pack-zh-hans:
-  publisher: ms-ceintl
-  extension: vscode-language-pack-zh-hans
-  version: 1.100.2025051409
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-ceintl/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
-
-material-theme:
-  publisher: zhuangtongfa
-  extension: material-theme
-  version: 3.19.0
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/zhuangtongfa/vsextensions/material-theme/3.19.0/vspackage
-
-material-icon-theme:
-  publisher: pkief
-  extension: material-icon-theme
-  version: 5.23.0
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/pkief/vsextensions/material-icon-theme/5.23.0/vspackage
-
-hexeditor:
-  publisher: ms-vscode
-  extension: hexeditor
-  version: 1.11.1
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/hexeditor/1.11.1/vspackage
-
-remote-explorer:
+﻿remote-explorer:
   publisher: ms-vscode
   extension: remote-explorer
   version: 0.5.0
@@ -40,11 +16,11 @@ remote-ssh:
   version: 0.120.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/remote-ssh/0.120.0/vspackage
 
-makefile-tools:
-  publisher: ms-vscode
-  extension: makefile-tools
-  version: 0.12.17
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/makefile-tools/0.12.17/vspackage
+clang-format:
+  publisher: xaver
+  extension: clang-format
+  version: 1.9.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/xaver/vsextensions/clang-format/1.9.0/vspackage
 
 devicetree:
   publisher: plorefice
@@ -52,11 +28,41 @@ devicetree:
   version: 0.1.1
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/plorefice/vsextensions/devicetree/0.1.1/vspackage
 
+hexeditor:
+  publisher: ms-vscode
+  extension: hexeditor
+  version: 1.11.1
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/hexeditor/1.11.1/vspackage
+
+vscode-clangd:
+  publisher: llvm-vs-code-extensions
+  extension: vscode-clangd
+  version: 0.1.33
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/llvm-vs-code-extensions/vsextensions/vscode-clangd/0.1.33/vspackage
+
 shellman:
   publisher: remisa
   extension: shellman
   version: 5.7.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/remisa/vsextensions/shellman/5.7.0/vspackage
+
+makefile-tools:
+  publisher: ms-vscode
+  extension: makefile-tools
+  version: 0.12.17
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/makefile-tools/0.12.17/vspackage
+
+vscode-language-pack-zh-hans:
+  publisher: ms-ceintl
+  extension: vscode-language-pack-zh-hans
+  version: 1.100.2025051409
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-ceintl/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
+
+material-theme:
+  publisher: zhuangtongfa
+  extension: material-theme
+  version: 3.19.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/zhuangtongfa/vsextensions/material-theme/3.19.0/vspackage
 
 background-cover:
   publisher: manasxx
@@ -64,9 +70,15 @@ background-cover:
   version: 2.7.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/manasxx/vsextensions/background-cover/2.7.0/vspackage
 
-vscode-clangd:
-  publisher: llvm-vs-code-extensions
-  extension: vscode-clangd
-  version: 0.1.33
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/llvm-vs-code-extensions/vsextensions/vscode-clangd/0.1.33/vspackage
+material-icon-theme:
+  publisher: pkief
+  extension: material-icon-theme
+  version: 5.23.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/pkief/vsextensions/material-icon-theme/5.23.0/vspackage
+
+bash-ide-vscode:
+  publisher: mads-hartmann
+  extension: bash-ide-vscode
+  version: 1.43.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/mads-hartmann/vsextensions/bash-ide-vscode/1.43.0/vspackage
 
