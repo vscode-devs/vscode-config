@@ -857,7 +857,7 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 		"--log=verbose",
 		"--clang-tidy",
 		"--clang-tidy-checks=cppcoreguidelines-*,performance-*,bugprone-*,portability-*,modernize-*,google-*",
-		"--compile-commands-dir=${workspacefolder}",
+		"--compile-commands-dir=${workspaceFolder}",
 		"--completion-style=detailed",
 		"--background-index",
 		"-j=16",
@@ -880,7 +880,9 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 "--compile-commands-dir"：对应后续 compile_commands.json 文件位置，上面是配置为工程目录。
 
-#### <font size=3>5.1.4 编译命令</font>
+#### <font size=3>5.1.4 工程配置</font>
+
+>参考资料：[Getting started](https://clangd.llvm.org/installation#project-setup)
 
 clangd的使用需要工程中存在 compile_commands.json 文件，怎么生成呢？可以用bear命令生成。
 
@@ -895,6 +897,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 但是有时候我们可能是用shell脚本控制编译，然后内部有很多个子makefile，可以直接在脚本前加bear：
 
 ```shell
+sudo apt install bear # 没有安装的话，需要安装一下
 bear ./build.sh -p1 -n2
 ```
 
@@ -918,21 +921,25 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 #### <font size=3>5.2.2 clang-format</font>
 
-好像是还需要装个clang-format的可执行程序，但是感觉装插件的时候自动装了？我是看我的ubuntu中直接有一个，但是版本比较老：
+好像是还需要装个clang-format的可执行程序，但是感觉装插件的时候自动装了？（后来发现其实应该是某一次自己装的😅），我是看我的ubuntu中直接有一个，但是版本比较老：
 
 <img src="README/img/image-20250519075313217.png" alt="image-20250519075313217" />
 
-可以去github下一个新版本的解压安装：[Releases · llvm/llvm-project](https://github.com/llvm/llvm-project)，但是看着好像比较大，我这里直接选了当前最新版本[llvm/llvm-project at llvmorg-20.1.5](https://github.com/llvm/llvm-project/tree/llvmorg-20.1.5)：
-
-<img src="README/img/image-20250519075633817.png" alt="image-20250519075633817" />
-
-但是呢，新版本可能会有风险，例如：
+可以去github下一个新版本的解压安装：[Releases · llvm/llvm-project](https://github.com/llvm/llvm-project)，比如[llvm/llvm-project at llvmorg-20.1.5](https://github.com/llvm/llvm-project/tree/llvmorg-20.1.5)。但是呢，新版本可能会有风险，例如：
 
 <img src="README/img/image-20250519230908897.png" alt="image-20250519230908897" />
 
 所以我后面其实用的是ubuntu自带的那个版本。我是ubuntu20.04，我看用这个版本也可以：[Release LLVM 15.0.0 · llvm/llvm-project](https://github.com/llvm/llvm-project/releases/tag/llvmorg-15.0.0)
 
 <img src="README/img/image-20250519231847994.png" alt="image-20250519231847994" />
+
+好像我们也可以通过命令安装：
+
+```shell
+sudo apt install clang-format
+```
+
+通过命令安装出来的版本多比较老，但是其实吧，完全够用啊，就格式化代码，还有啥花里胡哨的😁，可以后面有需要再升级。
 
 #### <font size=3>5.2.3 插件配置</font>
 
@@ -1257,7 +1264,35 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 ~/.vscode-server/data/Machine/settings.json
 ```
 
-## <font size=3>2. 用户配置</font>
+## <font size=3>2. 变量引用</font>
+
+> 参考资料：[Variables reference](https://code.visualstudio.com/docs/reference/variables-reference)
+
+在vscode中有一些预定义的变量，后面对插件配置可能会有用，这里直接看实例吧：[Predefined variables example](https://code.visualstudio.com/docs/reference/variables-reference#_predefined-variables-example)
+
+假设我们在编辑器中打开了一个文件：`/home/your-username/your-project/folder/file.ext` ，目录`/home/your-username/your-project`作为根工作区打开。那么每个变量的值如下：
+
+```shell
+- ${userHome}       : `/home/your-username`
+- ${workspaceFolder}: `/home/your-username/your-project`
+- ${workspaceFolderBasename}: `your-project`
+- ${file}           : `/home/your-username/your-project/folder/file.ext`
+- ${fileWorkspaceFolder}: `/home/your-username/your-project`
+- ${relativeFile}   : `folder/file.ext`
+- ${relativeFileDirname}: `folder`
+- ${fileBasename}   : `file.ext`
+- ${fileBasenameNoExtension}: `file`
+- ${fileExtname}    : `.ext`
+- ${fileDirname}    : `/home/your-username/your-project/folder`
+- ${fileDirnameBasename}: `folder`
+- ${lineNumber}     : line number of the cursor
+- ${columnNumber}   : column number of the cursor
+- ${selectedText}   : text selected in your code editor
+- ${execPath}       : location of Code.exe
+- ${pathSeparator}  : `/` on macOS or linux, `\` on Windows
+```
+
+## <font size=3>3. 用户配置</font>
 
 一些常用配置如下：
 
@@ -1469,15 +1504,15 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 
 ```
 
-## <font size=3>3. 工作区配置</font>
+## <font size=3>4. 工作区配置</font>
 
-### <font size=3>3.1 什么是工作区？</font>
+### <font size=3>4.1 什么是工作区？</font>
 
 [What is a VS Code workspace?](https://code.visualstudio.com/docs/editing/workspaces/workspaces)
 
-### <font size=3>3.2 怎么打开工作区设置？</font>
+### <font size=3>4.2 怎么打开工作区设置？</font>
 
-#### <font size=3>3.2.1 工作区和文件夹配置？</font>
+#### <font size=3>4.2.1 工作区和文件夹配置？</font>
 
 上面其实有提到，打开设置，然后就会出现工作区的配置菜单：
 
@@ -1506,7 +1541,7 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 }
 ```
 
-#### <font size=3>3.2.2 谁优先？</font>
+#### <font size=3>4.2.2 谁优先？</font>
 
 现在有用户配置文件、工作区配置文件、文件夹配置文件，谁优先？我试了一下，是这样的：
 
@@ -1514,7 +1549,7 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 .vscode/settings.json > *.code-workspace > %APPDATA%\Code\User\settings.json
 ```
 
-### <font size=3>3.3 在工作区中屏蔽文件</font>
+### <font size=3>4.3 在工作区中屏蔽文件</font>
 
 工作区是管理这个工程目录的，在这里可以针对工作做一些配置，例如屏蔽一些不需要的目录和文件：
 
@@ -1563,4 +1598,3 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
     <tr><td align="center">{n}</td><td align="left">    n是个数字，将前面的元素匹配n次，如"be{3}“可以且只可以匹配 ”beee”</td></tr>
     <tr><td align="center">{n, m}</td><td align="left">将前面的元素匹配至少n次，最多m次，如"be{1,3}" 可以且只可以匹配"be",“bee”, “beee”</td></tr>
 </table>
-
