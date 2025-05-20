@@ -1257,7 +1257,9 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 ~/.vscode-server/data/Machine/settings.json
 ```
 
-## <font size=3>2. settings.json</font>
+## <font size=3>2. 用户配置</font>
+
+一些常用配置如下：
 
 ```json
 {
@@ -1466,4 +1468,99 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 }
 
 ```
+
+## <font size=3>3. 工作区配置</font>
+
+### <font size=3>3.1 什么是工作区？</font>
+
+[What is a VS Code workspace?](https://code.visualstudio.com/docs/editing/workspaces/workspaces)
+
+### <font size=3>3.2 怎么打开工作区设置？</font>
+
+#### <font size=3>3.2.1 工作区和文件夹配置？</font>
+
+上面其实有提到，打开设置，然后就会出现工作区的配置菜单：
+
+<img src="README/img/image-20250520073815230.png" alt="image-20250520073815230" />
+
+然后我们切换到json文件，就会在当前打开的工程中创建一个.vscode目录：
+
+<img src="README/img/image-20250520073929198.png" alt="image-20250520073929198" />
+
+然后我们就可以对vscode进行设置了，这里的设置会优先于用户配置。还有一点，就是，我们要是创建了工作区文件\*.code-workspace的话，配置菜单就会多一个工作区顶层目录，同时，工作区这个菜单对应的json文件就变成了工作区文件，xxx文件夹这个菜单项就对应当目录下.vscode中的json配置文件：
+
+<img src="README/img/image-20250520074620528.png" alt="image-20250520074620528" />
+
+工作区文件中配置格式如下：
+
+```json
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+        "editor.fontSize": 16,          // 控制字体大小
+    }
+}
+```
+
+#### <font size=3>3.2.2 谁优先？</font>
+
+现在有用户配置文件、工作区配置文件、文件夹配置文件，谁优先？我试了一下，是这样的：
+
+```shell
+.vscode/settings.json > *.code-workspace > %APPDATA%\Code\User\settings.json
+```
+
+### <font size=3>3.3 在工作区中屏蔽文件</font>
+
+工作区是管理这个工程目录的，在这里可以针对工作做一些配置，例如屏蔽一些不需要的目录和文件：
+
+```json
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		// 搜索时不想显示的文件可按以下格式屏蔽(为 true 时屏蔽)
+		"search.exclude": {
+            "**/*.o":true,
+            "**/*.su":true,
+            "**/*.cmd":true,
+		},
+		// 不想在工作区显示的文件可按以下格式屏蔽(为 true 时屏蔽)
+		"files.exclude": {
+			"**/*.o":true,
+            "**/*.su":true,
+            "**/*.cmd":true,
+		},
+	}
+}
+```
+
+这里面是可以使用通配符的，具体的可以看这里：[Glob Patterns Reference](https://code.visualstudio.com/docs/editor/glob-patterns)
+
+<table>
+    <tr><td align="center">正则表达式</td><td align="center">匹配内容</td></tr>
+    <tr><td align="center">\</td><td align="left">特殊符号转义，如"*" ，转义后匹配的是字符"*"， “(” 匹配的是括号"("</td></tr>
+    <tr><td align="center">[字符序列]</td><td align="left">匹配[ ]中的任意字符，如[ae]，字符a和字符e均匹配</td></tr>
+    <tr><td align="center">[^字符序列]</td><td align="left">匹配不在[ ]中的任意字符，如[^ae]除了a和e，其他字符都匹配</td></tr>
+    <tr><td align="center">[字符1-字符2]</td><td align="left">匹配在[ ]之间的任意字符，如[a-x]，就是匹配a和x之间的所有字符（包括a和x）</td></tr>
+    <tr><td align="center">.</td><td align="left">匹配任意单个字符(除了\n)</td></tr>
+    <tr><td align="center">\w</td><td align="left">匹配所有单词字符（如"a"，“3”，“E”，但不匹配"?"，"."等）</td></tr>
+    <tr><td align="center">\W</td><td align="left">和\w相反，匹配所有非单词字符</td></tr>
+    <tr><td align="center">\s</td><td align="left">匹配空格</td></tr>
+    <tr><td align="center">\S</td><td align="left">和\s相反，匹配非空格</td></tr>
+    <tr><td align="center">\d</td><td align="left">匹配数字字符，如"1"，“4”，"9"等</td></tr>
+    <tr><td align="center">\D</td><td align="left">和\d相反，匹配除了数字字符外的其他字符</td></tr>
+    <tr><td align="center">*</td><td align="left">将前面的元素匹配0到多次，如"\d*.\d"，可以匹配"19.9"，".0",“129.9”</td></tr>
+    <tr><td align="center">+</td><td align="left">将前面的元素匹配1到多次，如"be+"，可以匹配"be"， “beeeeee”</td></tr>
+    <tr><td align="center">？</td><td align="left">将前面的元素匹配0次或者一次，如"rai?n" 可以且只可以匹配 “ran” 或者 “rain”</td></tr>
+    <tr><td align="center">{n}</td><td align="left">    n是个数字，将前面的元素匹配n次，如"be{3}“可以且只可以匹配 ”beee”</td></tr>
+    <tr><td align="center">{n, m}</td><td align="left">将前面的元素匹配至少n次，最多m次，如"be{1,3}" 可以且只可以匹配"be",“bee”, “beee”</td></tr>
+</table>
 
