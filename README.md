@@ -631,6 +631,44 @@ ssh <user>@<hostname>:[port]
 >
 > （2）我们自己开发的时候可能会在内网，那么就意味着我们无法连接外网实现自动下载。
 
+#### <font size=3>3.3.6 免密连接</font>
+
+前边我们已经可以正常链接到服务器，并可以打开服务器上的文件了，但是，有没有发现，每一次连接都需要输入密码，每一次打开文件夹还是需要输入密码，略显麻烦，我们可以将windows下的公钥添加到服务器中。
+
+##### <font size=3>3.3.6.1 生成SSH公钥和私钥</font>
+
+在windows下，我们可以打开powershell，然后输入以下命令创建SSH公钥和私钥：
+
+```shell
+# 这里其实随便一个字符串就可以
+ssh-keygen -t rsa -C "email_address"
+```
+
+然后一路enter下去就可以了，最终会在 C:\\Users\\&lt;user_name&gt;.ssh 目录下生成这两个文件：
+
+<img src="README/img/image-20221029130247828.png" alt="image-20221029130247828" style="zoom:50%;" />
+
+如果以前就有这两个文件的话，重新生成的文件会覆盖以前的文件，比如我之前就在win下使用 git ，就配置过ssh，所以这里我可以直接使用相应的公钥文件，而不必重新生成。
+
+##### <font size=3>3.3.6.2 添加公钥到服务器</font>
+
+接下来，我们需要将 id_rsa.pub （公钥）添加到服务器的 **authorized_keys** 中去：
+
+```shell
+sumu@sumu-virtual-machine:~$ cd .ssh/
+
+sumu@sumu-virtual-machine:~/.ssh$ ls
+config  id_ed25519  id_ed25519.pub  known_hosts
+```
+
+我们进入服务器的 ~/.ssh 目录下，查看一下是否存在 authorized_keys 文件，可以发现，我的服务器中是没有这个文件的，我们可以新建这个文件，要是原来就有这个文件的话，我们最好使用追加的方式添加到这个文件中。
+
+```shell
+cat ~/1sharedfiles/6temp/id_rsa.pub >> authorized_keys 
+```
+
+我是将公钥文件放在 ~/1sharedfiles/6temp/ 目录下，所以这里我们使用这样一个路径，通过上边的命令将公钥里边的内容追加到 authorized_keys 文件。然后我们从win中的VScode链接到服务器并打开相关文件，就会发现不需要输入密码了。
+
 ### <font size=3>3.4 GLIBC问题</font>
 
 #### <font size=3>3.4.1 报错信息</font>
@@ -818,6 +856,12 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 ## <font size=3>5. C/C++开发</font>
 
+> LLVM是什么？官网在这里：[The LLVM Compiler Infrastructure Project](https://llvm.org/)
+>
+> LLVM（最初是 **Low Level Virtual Machine** 的缩写，但现已不强调全称）是一个开源的**编译器基础设施项目**，旨在为编程语言提供模块化、可重用的编译和优化工具链。LLVM是一个编译器（确切的说是一套框架+基于框架的一些编译器实现，如clang），是当下很先进的一套编译系统。特别对于C/C++/Objective-C等语言而言，更是如此，广泛应用于静态编译、动态编译（JIT）、代码优化、代码生成等领域。
+
+
+
 ### <font size=3>5.1 clangd</font>
 
 [What is clangd?](https://clangd.llvm.org/)
@@ -921,9 +965,43 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 #### <font size=3>5.2.2 clang-format</font>
 
-好像是还需要装个clang-format的可执行程序，但是感觉装插件的时候自动装了？（后来发现其实应该是某一次自己装的😅），我是看我的ubuntu中直接有一个，但是版本比较老：
+##### <font size=3>5.2.2.1 安装包安装</font>
+
+安装了插件之后，还是个空壳，我们还需要安装clang-format工具，工具在哪里下？其实它也是LLVM中的一个工具，可以在这里下载：[LLVM Download Page](https://releases.llvm.org/download.html)：
+
+<img src="README/img/image-20250521222441032.png" alt="image-20250521222441032"  />
+
+点开就会发现有一堆的包，像下面这种上百M的，是免安装版本，下载完解压就能用：
+
+<img src="README/img/image-20250521222551167.png" alt="image-20250521222551167" />
+
+还有一种我看是windows下的可执行文件：
+
+<img src="README/img/image-20250521222726246.png" alt="image-20250521222726246" />
+
+这种的就是安装包，安装完后会包含clangd和clang-format。解压那种有些也是都有：
+
+<img src="README/img/image-20250521224150979.png" alt="image-20250521224150979" />
+
+所以其实前面也没太大必要专门装一个clangd。这个工具主要是在Remote SSH中使用，后续要安装到linxu中。当然在我的ubuntu中可能这个版本是用不了的，就像这样：
+
+<img src="README/img/image-20250521224235154.png" alt="image-20250521224235154" />
+
+为这个去折腾感觉有点不值，我选择apt安装，哈哈哈！！！
+
+##### <font size=3>5.2.2.2 命令安装</font>
+
+另外也可以通过命令安装：
+
+```shell
+sudo apt install clang-format
+```
+
+通过命令安装出来的版本多比较老，但是其实吧，完全够用啊，就格式化代码，还有啥花里胡哨的😁，可以后面有需要再升级。
 
 <img src="README/img/image-20250519075313217.png" alt="image-20250519075313217" />
+
+##### <font size=3>5.2.2.3 风险提示</font>
 
 可以去github下一个新版本的解压安装：[Releases · llvm/llvm-project](https://github.com/llvm/llvm-project)，比如[llvm/llvm-project at llvmorg-20.1.5](https://github.com/llvm/llvm-project/tree/llvmorg-20.1.5)。但是呢，新版本可能会有风险，例如：
 
@@ -933,13 +1011,7 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 <img src="README/img/image-20250519231847994.png" alt="image-20250519231847994" />
 
-好像我们也可以通过命令安装：
-
-```shell
-sudo apt install clang-format
-```
-
-通过命令安装出来的版本多比较老，但是其实吧，完全够用啊，就格式化代码，还有啥花里胡哨的😁，可以后面有需要再升级。
+> Tips：新的版本可能会支持更多更详细的配置项吧，反正尽可能选可用的新版本就行。
 
 #### <font size=3>5.2.3 插件配置</font>
 
@@ -1001,11 +1073,7 @@ SortIncludes: true
 
 然后右键格式化文档即可。
 
-##### <font size=3>5.2.3.3 我的常用配置</font>
-
->[Clang-Format Style Options — Clang 21.0.0git documentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
->
->[Clang-Format 样式选项 — Clang 20.0.0git 文档 - Clang 编译器](https://clang.llvm.net.cn/docs/ClangFormatStyleOptions.html)
+##### <font size=3>5.2.3.3 常用配置</font>
 
 ```yaml
 # .clang-format
@@ -1041,6 +1109,16 @@ NamespaceIndentation: All
 # 缩进宽度（如 2、4）
 IndentWidth: 4
 ```
+
+>参考资料：
+>
+>[Clang-Format Style Options — Clang 21.0.0git documentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
+>
+>[Clang-Format 样式选项 — Clang 20.0.0git 文档 - Clang 编译器](https://clang.llvm.net.cn/docs/ClangFormatStyleOptions.html)
+>
+>[Clang-format格式化及配置参数-CSDN博客](https://blog.csdn.net/Once_day/article/details/127761573)
+
+
 
 ## <font size=3>6. 自动生成注释</font>
 
@@ -1223,7 +1301,7 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
 
 #### <font size=3>7.2.2 插件配置</font>
 
-# <font size=3>四、配置</font>
+# <font size=3>四、vscode配置</font>
 
 ## <font size=3>1. 配置界面与文件</font>
 
