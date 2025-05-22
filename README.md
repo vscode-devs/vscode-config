@@ -45,6 +45,8 @@ OS: Windows_NT x64 10.0.19044
 >
 > ​								——[Visual Studio Code FAQ](https://code.visualstudio.com/Docs/supporting/FAQ#_can-i-run-vs-code-on-older-windows-versions)
 
+所以可以知道Win7最后一个支持的版本是1.71（2022年8月），Win8/8.1最后一个支持的版本是1.80（2023年6月）
+
 ## <font size=3>3. 记录一下相关目录？</font>
 
 主要是是在windows下开发，所以这里主要关注一下windows中vscode相关的目录
