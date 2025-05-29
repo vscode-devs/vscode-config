@@ -1126,7 +1126,7 @@ IndentWidth: 4
 
 ### <font size=3>6.1 koroFileHeader</font>
 
-这个插件是自动生成注释的，但是延迟会比较大，可配置项比较多。其实要不要都行。
+这个插件是自动生成注释的，但是延迟会比较大，可配置项比较多。
 
 #### <font size=3>6.1.1 VSIX下载</font>
 
@@ -1267,6 +1267,173 @@ VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/pub
     },
 }
 ```
+
+### <font size=3>6.2 Doxygen Documentation Generator</font>
+
+这个插件可配置项较少，但是速度很快。
+
+#### <font size=3>6.2.1 VSIX下载</font>
+
+```shell
+# https://marketplace.visualstudio.com/_apis/public/gallery/publishers/{发布者}/vsextensions/{插件名}/{版本号}/vspackage
+
+https://marketplace.visualstudio.com/_apis/public/gallery/publishers/cschlosser/vsextensions/doxdocgen/1.4.0/vspackage
+```
+
+VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/cschlosser/vsextensions/doxdocgen/1.4.0/vspackage
+
+#### <font size=3>6.2.2 插件配置</font>
+
+[GitHub - cschlosser/doxdocgen: Generate doxygen documentation from source code in VS Code](https://github.com/cschlosser/doxdocgen?tab=readme-ov-file#config-options)：
+
+```json
+{
+  "doxdocgen.c.triggerSequence": "dfun", // 触发方式，空行处敲 dfunc + Enter可以触发注释
+}
+```
+
+### <font size=3>6.3 Doxygen</font>
+
+#### <font size=3>6.3.1 简介</font>
+
+Doxygen 并不是vscode插件，它是软件开发中广泛使用的文档生成工具。它自动化从源代码注释生成文档的过程，解析关于类、函数和变量的信息，生成 HTML 和 PDF 等格式的输出。通过简化和标准化文档流程，Doxygen 增强了跨不同编程语言和项目规模的协作与维护。
+
+官网：[Doxygen homepage](https://www.doxygen.nl/index.html)
+
+> Tips：
+>
+> - 中文主页：https://doxygen.cpp.org.cn/
+> - Github仓库：[GitHub - doxygen/doxygen: Official doxygen git repository](https://github.com/doxygen/doxygen)
+
+#### <font size=3>6.3.2 下载安装</font>
+
+可以去官网下：[Doxygen download](https://www.doxygen.nl/download.html)：
+
+<img src="README/img/image-20250529125131443.png" alt="image-20250529125131443"  />
+
+要是被墙了可以在这里下：
+
+- [Doxygen download | SourceForge.net](https://sourceforge.net/projects/doxygen/?source=dlp)
+- [Tags · doxygen/doxygen · GitHub](https://github.com/doxygen/doxygen/tags)
+
+#### <font size=3>6.3.3 基本用法</font>
+
+##### <font size=3>6.3.3.1 特定格式的批注撰写</font>
+
+```c
+/**
+ * @file   main.c
+ * @brief  This is the test demo
+ * @author doxygen demo
+ * @date   2025-05-29
+ */
+
+/**
+ * @brief   
+ * @note    
+ * @param   {unsigned char} m
+ * @param   {unsigned char} n
+ * @return  {*}
+ */
+unsigned int pow_demo(unsigned char m,unsigned char n)
+{
+	unsigned int result = 1;	 
+	while(n--) result *= m;    
+	return result;
+}
+
+/**
+ * @brief   
+ * @note    
+ * @param   {int} argc
+ * @param   {char**} argv
+ * @return  {*}
+ */
+int main(int argc, char** argv)
+{
+	pow_demo();
+    return 0;
+}
+```
+
+##### <font size=3>6.3.3.2 生成配置文件的模板文件</font>
+
+生成配置文件的模板文件，名为Doxyfile，在工程根目录下执行：
+
+```shell
+doxygen -g
+```
+
+##### <font size=3>6.3.3.3 修改配置文件</font>
+
+根据需要手动修改配置文件，例如：
+
+```shell
+# 修改点EXTRACT_ALL的值改成YES，如下，表示提取所有类和函数
+EXTRACT_ALL            = YES
+```
+
+常用的需要设置的主要分为：文档格式、项目输入文件、输出文档类型：
+
+```shell
+PROJECT_NAME     : 项目名称。
+PROJECT_VERSION  : 项目版本。
+PROJECT_LANGUAGE : 项目使用的语言。
+INPUT            : 包含源代码文件的目录。
+FILE_PATTERNS    : 匹配哪些文件应该被 Doxygen 处理。
+EXTRACT_ALL      : 是否提取所有类和函数。
+GENERATE_LATEX   : 是否生成 LaTeX 格式的文档。
+HAVE_DOT         : 是否可以使用 Graphviz 的 dot 工具来生成图表。
+CALL_GRAPH       : 是否生成函数调用图。
+CALLER_GRAPH     : 是否生成被调用函数图。
+WARNINGS         : 是否显示警告信息。
+SOURCE_BROWSER   : 是否显示源代码浏览器。
+INLINE_SOURCES   : 是否在 HTML 文档中内联显示源代码。
+STRIP_CODE_COMMENTS: 是否去除源代码中的注释。
+GENERATE_HTML    : 是否生成 HTML 格式的文档。
+HTML_OUTPUT      : HTML 文档的输出目录。
+HTML_FILE_EXTENSIONS: HTML 文件扩展名。
+GENERATE_XML     : 是否生成 XML 格式的文档。
+XML_OUTPUT       : XML 文档的输出目录。
+XML_PROLOGUE     : XML Prologue 的内容。
+GENERATE_LATEX   : 是否生成 LaTeX 格式的文档。
+LATEX_OUTPUT     : LaTeX 文档的输出目录。
+HAVE_BIBTEX      : 是否可以生成参考文献。
+BIB_LATEX_STYLE  : 参考文献的 LaTeX 样式。
+EXT_CALL_GRAPH   : 是否为外部函数生成调用图
+```
+
+##### <font size=3>6.3.3.4 生成文档</font>
+
+根目录下执行
+
+```shell
+doxygen
+```
+
+上面都是默认配置，所以将会在输出目录(当前目录)生成`html`、`latex`目录。
+
+<img src="README/img/image-20250529131404852.png" alt="image-20250529131404852"  />
+
+- `html`目录中文件如下：
+
+<img src="README/img/image-20250529131029563.png" alt="image-20250529131029563"  />
+
+其中index.html就是主页，从浏览器打开即可。
+
+- `latex`目录文件如下：
+
+<img src="README/img/image-20250529131719952.png" alt="image-20250529131719952"  />
+
+##### <font size=3>6.3.3.5 生成pdf</font>
+
+上面要是生成了`latex`目录，我们还可以进入`latex`目录，执行：
+
+```shell
+make
+```
+
+还会生成名为refman.pdf的pdf文件。
 
 ## <font size=3>7. 脚本开发</font>
 
