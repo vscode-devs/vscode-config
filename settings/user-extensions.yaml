@@ -82,3 +82,15 @@ bash-ide-vscode:
   version: 1.43.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/mads-hartmann/vsextensions/bash-ide-vscode/1.43.0/vspackage
 
+cmake-tools:
+  publisher: ms-vscode
+  extension: cmake-tools
+  version: 1.20.53
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/cmake-tools/1.20.53/vspackage
+
+korofileheader:
+  publisher: obkoro1
+  extension: korofileheader
+  version: 4.9.3
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/obkoro1/vsextensions/korofileheader/4.9.3/vspackage
+
