@@ -50,9 +50,9 @@ if not exist "%backup_dir%" (
 
 :: 备份用户设置
 if exist "%user_settings%" (
-    copy /Y "%user_settings%" "%backup_dir%\user-settings.json" >nul
+    copy /Y "%user_settings%" "%backup_dir%\settings-local.json" >nul
     echo [Success] Settings backed up to:
-    echo   %backup_dir%\user-settings.json
+    echo   %backup_dir%\settings-local.json
 ) else (
     echo [Warning] Settings file not found:
     echo   %user_settings%
@@ -60,9 +60,9 @@ if exist "%user_settings%" (
 
 :: 备份扩展列表
 if exist "%extensions_list%" (
-    copy /Y "%extensions_list%" "%backup_dir%\user-extensions.json" >nul
+    copy /Y "%extensions_list%" "%backup_dir%\extensions-local.json" >nul
     echo [Success] Extensions list backed up to:
-    echo   %backup_dir%\user-extensions.json
+    echo   %backup_dir%\extensions-local.json
 ) else (
     echo [Warning] Extensions file not found:
     echo   %extensions_list%
@@ -76,7 +76,7 @@ goto menu
 :: -------------------------------------------------
 :restore
 set "vscode_settings=%APPDATA%\Code\User\settings.json"
-set "backup_file=%~dp0settings\user-settings.json"
+set "backup_file=%~dp0settings\settings-local.json"
 
 if not exist "%backup_file%" (
     echo Error: Backup file not found
@@ -321,8 +321,8 @@ goto menu
 echo Generating extension manifests...
 echo -------------------------------
 
-call :GenerateExtensionManifest "%~dp0settings\user-extensions.json" "%~dp0settings\user-extensions.yaml"
-call :GenerateExtensionManifest "%~dp0settings\ssh-remote-extensions.json" "%~dp0settings\ssh-remote-extensions.yaml"
+call :GenerateExtensionManifest "%~dp0settings\extensions-local.json" "%~dp0settings\extensions-local.yaml"
+call :GenerateExtensionManifest "%~dp0settings\extensions-remote.json" "%~dp0settings\extensions-remote.yaml"
 
 echo All manifests processed!
 pause

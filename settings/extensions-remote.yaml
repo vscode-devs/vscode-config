@@ -1,0 +1,18 @@
+﻿vscode-clangd:
+  publisher: llvm-vs-code-extensions
+  extension: vscode-clangd
+  version: 0.1.33
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/llvm-vs-code-extensions/vsextensions/vscode-clangd/0.1.33/vspackage
+
+clang-format:
+  publisher: xaver
+  extension: clang-format
+  version: 1.9.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/xaver/vsextensions/clang-format/1.9.0/vspackage
+
+bash-ide-vscode:
+  publisher: mads-hartmann
+  extension: bash-ide-vscode
+  version: 1.43.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/mads-hartmann/vsextensions/bash-ide-vscode/1.43.0/vspackage
+
