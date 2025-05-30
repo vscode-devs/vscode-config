@@ -94,3 +94,21 @@ korofileheader:
   version: 4.9.3
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/obkoro1/vsextensions/korofileheader/4.9.3/vspackage
 
+copilot-chat:
+  publisher: github
+  extension: copilot-chat
+  version: 0.27.2
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/github/vsextensions/copilot-chat/0.27.2/vspackage
+
+copilot:
+  publisher: github
+  extension: copilot
+  version: 1.325.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/github/vsextensions/copilot/1.325.0/vspackage
+
+claude-dev:
+  publisher: saoudrizwan
+  extension: claude-dev
+  version: 3.17.8
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/saoudrizwan/vsextensions/claude-dev/3.17.8/vspackage
+
