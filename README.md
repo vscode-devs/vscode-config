@@ -69,6 +69,12 @@ C:\Users\<user_name>\.vscode\extensions
 
 > Tops：卸载的时候目录中的文件不会被删除。
 
+## <font size=3>4. 参考文档</font>
+
+- 中文：[https://vscode.js.cn/docs](https://vscode.js.cn/docs)
+
+- 英文：[https://code.visualstudio.com/docs](https://code.visualstudio.com/docs)
+
 # <font size=3>二、怎么安装插件？</font>
 
 ## <font size=3>1. 插件安装位置</font>
@@ -1469,6 +1475,66 @@ https://marketplace.visualstudio.com/_apis/public/gallery/publishers/mads-hartma
 VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/mads-hartmann/vsextensions/bash-ide-vscode/1.43.0/vspackage
 
 #### <font size=3>7.2.2 插件配置</font>
+
+## <font size=3>8. EditorConfig for VS Code</font>
+
+> [EditorConfig](https://editorconfig.org/)
+
+EditorConfig有助于为跨不同编辑器和ide从事同一项目的多个开发人员维护一致的编码风格。EditorConfig项目由用于定义编码样式的文件格式和一组文本编辑器插件组成，这些插件使编辑器能够读取文件格式并遵循已定义的样式。EditorConfig文件很容易阅读，并且可以很好地与版本控制系统配合使用。
+
+### <font size=3>8.1 VSIX下载</font>
+
+```shell
+editorconfig:
+  publisher: editorconfig
+  extension: editorconfig
+  version: 0.17.4
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/editorconfig/vsextensions/editorconfig/0.17.4/vspackage
+```
+
+VSIX下载链接：https://marketplace.visualstudio.com/_apis/public/gallery/publishers/editorconfig/vsextensions/editorconfig/0.17.4/vspackage。
+
+### <font size=3>8.2 插件配置</font>
+
+创建一个.editconfig文件：
+
+```EditorConfig
+# EditorConfig is awesome: https://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+# Matches multiple files with brace expansion notation
+# Set default charset
+[*.{js,py}]
+charset = utf-8
+
+# 4 space indentation
+[*.py]
+indent_style = space
+indent_size = 4
+
+# Tab indentation (no size specified)
+[Makefile]
+indent_style = tab
+
+# Indentation override for all JS under lib directory
+[lib/**.js]
+indent_style = space
+indent_size = 2
+
+# Matches the exact files either package.json or .travis.yml
+[{package.json,.travis.yml}]
+indent_style = space
+indent_size = 2
+```
+
+
 
 # <font size=3>四、vscode配置</font>
 
