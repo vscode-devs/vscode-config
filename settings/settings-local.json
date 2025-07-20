@@ -44,7 +44,13 @@
 	"editor.suggest.snippetsPreventQuickSuggestions": false, // 这个开不开效果好像都一样，据说是因为一个bug，建议关掉
 	"editor.linkedEditing": true,                    // html标签自动重命名（终于不需要Auto Rename Tag插件了！）
 	"editor.cursorSmoothCaretAnimation": "off",      // 让光标移动、插入变得平滑(移动过程增加了动画)
-
+	"[markdown]": {
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
     // 终端参数配置
 	"terminal.integrated.defaultProfile.windows": "Windows PowerShell", // 将终端设为power shell
 	"terminal.integrated.rightClickBehavior": "copyPaste",  // 在终端中右键时粘贴，改为default则会变成显示菜单
@@ -127,7 +133,7 @@
 	},
 	// 插件配置项
 	"fileheader.configObj": {
-		"autoAdd": true, // 检测文件没有头部注释，自动添加文件头部注释
+		"autoAdd": false, // 检测文件没有头部注释，自动添加文件头部注释
 		"autoAddLine": 100, // 文件超过多少行数 不再自动添加头部注释
 		"autoAlready": true, // 只添加插件支持的语言以及用户通过`language`选项自定义的注释
 		"supportAutoLanguage": [], // 设置之后，在数组内的文件才支持自动添加
@@ -214,5 +220,22 @@
 			"end": " */",
 			"use": false
 		},
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"remote.SSH.remotePlatform": {
+		"192.168.81.128": "linux"
+	},
+	"github.copilot.nextEditSuggestions.enabled": true,
+	"github.copilot.enable": {
+		"*": true,
+		"plaintext": false,
+		"markdown": false,
+		"scminput": false,
+		"yaml": true
 	}
 }

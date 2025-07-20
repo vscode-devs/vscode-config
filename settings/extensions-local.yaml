@@ -1,26 +1,14 @@
-﻿remote-explorer:
+﻿vscode-language-pack-zh-hans:
+  publisher: ms-ceintl
+  extension: vscode-language-pack-zh-hans
+  version: 1.100.2025051409
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-ceintl/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
+
+remote-explorer:
   publisher: ms-vscode
   extension: remote-explorer
   version: 0.5.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/remote-explorer/0.5.0/vspackage
-
-remote-ssh-edit:
-  publisher: ms-vscode-remote
-  extension: remote-ssh-edit
-  version: 0.87.0
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/remote-ssh-edit/0.87.0/vspackage
-
-remote-ssh:
-  publisher: ms-vscode-remote
-  extension: remote-ssh
-  version: 0.120.0
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/remote-ssh/0.120.0/vspackage
-
-clang-format:
-  publisher: xaver
-  extension: clang-format
-  version: 1.9.0
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/xaver/vsextensions/clang-format/1.9.0/vspackage
 
 devicetree:
   publisher: plorefice
@@ -28,23 +16,23 @@ devicetree:
   version: 0.1.1
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/plorefice/vsextensions/devicetree/0.1.1/vspackage
 
-hexeditor:
-  publisher: ms-vscode
-  extension: hexeditor
-  version: 1.11.1
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/hexeditor/1.11.1/vspackage
+editorconfig:
+  publisher: editorconfig
+  extension: editorconfig
+  version: 0.17.4
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/editorconfig/vsextensions/editorconfig/0.17.4/vspackage
 
-vscode-clangd:
-  publisher: llvm-vs-code-extensions
-  extension: vscode-clangd
-  version: 0.1.33
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/llvm-vs-code-extensions/vsextensions/vscode-clangd/0.1.33/vspackage
+remote-ssh-edit:
+  publisher: ms-vscode-remote
+  extension: remote-ssh-edit
+  version: 0.87.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/remote-ssh-edit/0.87.0/vspackage
 
-shellman:
-  publisher: remisa
-  extension: shellman
-  version: 5.7.0
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/remisa/vsextensions/shellman/5.7.0/vspackage
+clang-format:
+  publisher: xaver
+  extension: clang-format
+  version: 1.9.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/xaver/vsextensions/clang-format/1.9.0/vspackage
 
 makefile-tools:
   publisher: ms-vscode
@@ -52,11 +40,23 @@ makefile-tools:
   version: 0.12.17
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/makefile-tools/0.12.17/vspackage
 
-vscode-language-pack-zh-hans:
-  publisher: ms-ceintl
-  extension: vscode-language-pack-zh-hans
-  version: 1.100.2025051409
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-ceintl/vsextensions/vscode-language-pack-zh-hans/1.100.2025051409/vspackage
+hexeditor:
+  publisher: ms-vscode
+  extension: hexeditor
+  version: 1.11.1
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/hexeditor/1.11.1/vspackage
+
+shellman:
+  publisher: remisa
+  extension: shellman
+  version: 5.7.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/remisa/vsextensions/shellman/5.7.0/vspackage
+
+vscode-clangd:
+  publisher: llvm-vs-code-extensions
+  extension: vscode-clangd
+  version: 0.1.33
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/llvm-vs-code-extensions/vsextensions/vscode-clangd/0.1.33/vspackage
 
 material-theme:
   publisher: zhuangtongfa
@@ -64,17 +64,41 @@ material-theme:
   version: 3.19.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/zhuangtongfa/vsextensions/material-theme/3.19.0/vspackage
 
+remote-ssh:
+  publisher: ms-vscode-remote
+  extension: remote-ssh
+  version: 0.120.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode-remote/vsextensions/remote-ssh/0.120.0/vspackage
+
 background-cover:
   publisher: manasxx
   extension: background-cover
   version: 2.7.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/manasxx/vsextensions/background-cover/2.7.0/vspackage
 
+nunjucks:
+  publisher: ronnidc
+  extension: nunjucks
+  version: 0.3.1
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ronnidc/vsextensions/nunjucks/0.3.1/vspackage
+
+language-stylus:
+  publisher: sysoev
+  extension: language-stylus
+  version: 1.16.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/sysoev/vsextensions/language-stylus/1.16.0/vspackage
+
+copilot-chat:
+  publisher: github
+  extension: copilot-chat
+  version: 0.27.3
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/github/vsextensions/copilot-chat/0.27.3/vspackage
+
 material-icon-theme:
   publisher: pkief
   extension: material-icon-theme
-  version: 5.23.0
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/pkief/vsextensions/material-icon-theme/5.23.0/vspackage
+  version: 5.24.0
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/pkief/vsextensions/material-icon-theme/5.24.0/vspackage
 
 bash-ide-vscode:
   publisher: mads-hartmann
@@ -88,23 +112,17 @@ cmake-tools:
   version: 1.20.53
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-vscode/vsextensions/cmake-tools/1.20.53/vspackage
 
-korofileheader:
-  publisher: obkoro1
-  extension: korofileheader
-  version: 4.9.3
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/obkoro1/vsextensions/korofileheader/4.9.3/vspackage
-
-copilot-chat:
-  publisher: github
-  extension: copilot-chat
-  version: 0.27.2
-  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/github/vsextensions/copilot-chat/0.27.2/vspackage
-
 copilot:
   publisher: github
   extension: copilot
   version: 1.325.0
   vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/github/vsextensions/copilot/1.325.0/vspackage
+
+korofileheader:
+  publisher: obkoro1
+  extension: korofileheader
+  version: 4.9.3
+  vsix-url: https://marketplace.visualstudio.com/_apis/public/gallery/publishers/obkoro1/vsextensions/korofileheader/4.9.3/vspackage
 
 claude-dev:
   publisher: saoudrizwan
