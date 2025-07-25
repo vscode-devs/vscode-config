@@ -1563,7 +1563,13 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 
 <img src="README/img/image-20250516152043201.png" alt="image-20250516152043201"  />
 
-对于工作区来说，工作区的配置文件优先级最高。
+其实这里是有点复杂的，记住这个就行了：
+
+```txt
+系统默认设置(不可修改) - 用户设置 - 远程设置 - 工作区设置 - 文件夹设置
+```
+
+后者的设置会覆盖前者的设置，若没有设置某一项，将继续使用前者的设置。
 
 ### <font size=3>1.3 远程配置文件</font>
 
@@ -1571,7 +1577,7 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 
 <img src="README/img/image-20250516220101059.png" alt="image-20250516220101059" />
 
-当ssh remote连接到服务器时，远程服务器的这个配置文件优先级要高于本地的配置文件，当断开后，服务器端的配置文件不影响本地。这个配置文件存在于服务器的下面的目录中：
+当ssh remote连接到服务器时，远程服务器的这个配置文件优先级要高于本地的用户配置文件，当断开后，服务器端的配置文件不影响本地。这个配置文件存在于服务器的下面的目录中：
 
 ```shell
 ~/.vscode-server/data/Machine/settings.json
@@ -1835,7 +1841,7 @@ C:\Users\<user_name>\AppData\Roaming\Code\User\settings.json
 
 <img src="README/img/image-20250520073929198.png" alt="image-20250520073929198" />
 
-然后我们就可以对vscode进行设置了，这里的设置会优先于用户配置。还有一点，就是，我们要是创建了工作区文件\*.code-workspace的话，配置菜单就会多一个工作区顶层目录，同时，工作区这个菜单对应的json文件就变成了工作区文件，xxx文件夹这个菜单项就对应当目录下.vscode中的json配置文件：
+然后我们就可以对vscode进行设置了，这里的设置会优先于用户配置。还有一点，就是，我们要是创建了工作区文件`\*.code-workspace`的话，配置菜单就会多一个工作区顶层目录，同时，工作区这个菜单对应的json文件就变成了工作区文件，xxx文件夹这个菜单项就对应当目录下.vscode中的json配置文件：
 
 <img src="README/img/image-20250520074620528.png" alt="image-20250520074620528" />
 
